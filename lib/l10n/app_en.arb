@@ -1,0 +1,41 @@
+{
+    "appTitle": "Campsite Platform",
+    "home": "Home",
+    "map": "Map",
+    "campsites": "Campsites",
+    "filters": "Filters",
+    "applyFilters": "Apply Filters",
+    "clearFilters": "Clear Filters",
+    "searchCampsites": "Search campsites...",
+    "price": "Price",
+    "pricePerNight": "Price per night",
+    "amenities": "Amenities",
+    "rating": "Rating",
+    "minPrice": "Min Price",
+    "maxPrice": "Max Price",
+    "minRating": "Min Rating",
+    "toilets": "Toilets",
+    "shower": "Shower",
+    "drinkingWater": "Drinking Water",
+    "picnicTable": "Picnic Table",
+    "firePlace": "Fire Place",
+    "closeToWater": "Close to Water",
+    "campFireAllowed": "Campfire Allowed",
+    "details": "Details",
+    "description": "Description",
+    "location": "Location",
+    "bookNow": "Book Now",
+    "viewOnMap": "View on Map",
+    "noResultsFound": "No campsites found",
+    "tryAdjustingFilters": "Try adjusting your filters",
+    "errorLoadingCampsites": "Error loading campsites",
+    "retry": "Retry",
+    "campsitesFound": "{count, plural, =0{No campsites} =1{1 campsite} other{{count} campsites}} found",
+    "@campsitesFound": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    }
+}
