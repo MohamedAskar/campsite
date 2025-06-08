@@ -14,9 +14,13 @@ class CampsiteApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = AppTheme.createTextTheme(context, "Outfit");
+    final theme = AppTheme(textTheme);
+
     return MaterialApp.router(
       title: 'Campsite Platform',
-      theme: AppTheme.lightTheme,
+      theme: theme.light(),
+      darkTheme: theme.dark(),
       routerConfig: AppRouter.router,
       localizationsDelegates: const [
         AppLocalizations.delegate,
