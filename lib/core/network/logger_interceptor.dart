@@ -13,7 +13,17 @@ class LoggerInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    log('Response: ${response.statusCode} ${response.data}', name: _logPrefix);
+    String responseBody;
+    if (response.data is Iterable) {
+      final length = (response.data as Iterable).length;
+      responseBody = 'Iterable with $length items';
+    } else {
+      responseBody = response.data.toString();
+    }
+    log(
+      'Response: STATUS: ${response.statusCode}, $responseBody',
+      name: _logPrefix,
+    );
     super.onResponse(response, handler);
   }
 

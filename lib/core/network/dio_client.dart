@@ -1,5 +1,14 @@
 import 'package:campsite/core/network/logger_interceptor.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'dio_client.g.dart';
+
+@riverpod
+DioClient dioClient(Ref ref) {
+  return DioClient();
+}
 
 class DioClient {
   static final DioClient _instance = DioClient._internal();
