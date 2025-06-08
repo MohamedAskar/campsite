@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+
 import '../../domain/entities/campsite.dart';
 import 'geo_location_model.dart';
 
 part 'campsite_model.g.dart';
-
 
 @JsonSerializable()
 class CampsiteModel {

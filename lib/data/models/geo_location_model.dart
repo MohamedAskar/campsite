@@ -16,5 +16,5 @@ class GeoLocationModel {
 
   Map<String, dynamic> toJson() => _$GeoLocationModelToJson(this);
 
-  GeoLocation toDomain() => GeoLocation(lat: lat, long: long);
+  GeoLocation toDomain() => GeoLocation(lat: lat / 1000, long: long / 1000);
 }

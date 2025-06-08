@@ -3,6 +3,7 @@ import '../models/campsite_model.dart';
 
 abstract class CampsiteRemoteDataSource {
   Future<List<CampsiteModel>> getCampsites();
+  Future<CampsiteModel> getCampsiteById(String id);
 }
 
 class CampsiteRemoteDataSourceImpl implements CampsiteRemoteDataSource {
@@ -23,6 +24,20 @@ class CampsiteRemoteDataSourceImpl implements CampsiteRemoteDataSource {
       }
     } catch (e) {
       throw Exception('Failed to load campsites: $e');
+    }
+  }
+
+  @override
+  Future<CampsiteModel> getCampsiteById(String id) async {
+    try {
+      final response = await dioClient.dio.get('campsites/$id');
+      if (response.statusCode == 200) {
+        return CampsiteModel.fromJson(response.data);
+      } else {
+        throw Exception('Failed to load campsite: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load campsite: $e');
     }
   }
 }
