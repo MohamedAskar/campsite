@@ -6,11 +6,11 @@ part of 'campsite_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dioClientHash() => r'8b2f86db76ff702eaf0eb16fd9c186e5d62db83e';
+String _$dioClientHash() => r'895f0dc2f8d5eab562ad65390e5c6d4a1f722b0d';
 
 /// See also [dioClient].
 @ProviderFor(dioClient)
-final dioClientProvider = AutoDisposeProvider<DioClient>.internal(
+final dioClientProvider = Provider<DioClient>.internal(
   dioClient,
   name: r'dioClientProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,9 +22,9 @@ final dioClientProvider = AutoDisposeProvider<DioClient>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef DioClientRef = AutoDisposeProviderRef<DioClient>;
+typedef DioClientRef = ProviderRef<DioClient>;
 String _$campsiteRemoteDataSourceHash() =>
-    r'fe45afc0d425f8945aace06b99d43b6abfaeb396';
+    r'059a2f89184d2788d4eae3474ad8bff46091de73';
 
 /// See also [campsiteRemoteDataSource].
 @ProviderFor(campsiteRemoteDataSource)
@@ -44,7 +44,7 @@ final campsiteRemoteDataSourceProvider =
 typedef CampsiteRemoteDataSourceRef =
     AutoDisposeProviderRef<CampsiteRemoteDataSource>;
 String _$campsiteRepositoryHash() =>
-    r'e2bbd6c8f2d36df086613e5ac5df0f60f56691c8';
+    r'4ff4375821d00824b7c8664433d944c7c81354a7';
 
 /// See also [campsiteRepository].
 @ProviderFor(campsiteRepository)
@@ -62,7 +62,7 @@ final campsiteRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CampsiteRepositoryRef = AutoDisposeProviderRef<CampsiteRepository>;
-String _$getCampsitesHash() => r'bbc469eabaab4d1c40b0dc6fef7c5a0d99927b7b';
+String _$getCampsitesHash() => r'e7fd7082c587953400832827e7aae051f46cecf2';
 
 /// See also [getCampsites].
 @ProviderFor(getCampsites)
@@ -79,7 +79,26 @@ final getCampsitesProvider = AutoDisposeProvider<GetCampsites>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetCampsitesRef = AutoDisposeProviderRef<GetCampsites>;
-String _$campsiteListHash() => r'f4ef73374d5e051f6f5bdeb5a0fe79e11ddf41bb';
+String _$getCampsiteDetailsHash() =>
+    r'4402c62686dac2dcd8867cafcdf05e8cab348487';
+
+/// See also [getCampsiteDetails].
+@ProviderFor(getCampsiteDetails)
+final getCampsiteDetailsProvider =
+    AutoDisposeProvider<GetCampsiteDetails>.internal(
+      getCampsiteDetails,
+      name: r'getCampsiteDetailsProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$getCampsiteDetailsHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef GetCampsiteDetailsRef = AutoDisposeProviderRef<GetCampsiteDetails>;
+String _$campsiteListHash() => r'510434e4f5763e76132886992fa0ee4919dba1dc';
 
 /// See also [campsiteList].
 @ProviderFor(campsiteList)
@@ -96,42 +115,223 @@ final campsiteListProvider = AutoDisposeFutureProvider<List<Campsite>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CampsiteListRef = AutoDisposeFutureProviderRef<List<Campsite>>;
-String _$filteredCampsitesHash() => r'6cd599c03f2fac6d1262766b1715f7d04a3f2a05';
+String _$campsiteDetailsHash() => r'f80ddc2e71d780ce2259ee93465f7339463b111d';
 
-/// See also [filteredCampsites].
-@ProviderFor(filteredCampsites)
-final filteredCampsitesProvider = AutoDisposeProvider<List<Campsite>>.internal(
-  filteredCampsites,
-  name: r'filteredCampsitesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$filteredCampsitesHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+/// Copied from Dart SDK
+class _SystemHash {
+  _SystemHash._();
+
+  static int combine(int hash, int value) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + value);
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
+    return hash ^ (hash >> 6);
+  }
+
+  static int finish(int hash) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+    // ignore: parameter_assignments
+    hash = hash ^ (hash >> 11);
+    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
+  }
+}
+
+/// See also [campsiteDetails].
+@ProviderFor(campsiteDetails)
+const campsiteDetailsProvider = CampsiteDetailsFamily();
+
+/// See also [campsiteDetails].
+class CampsiteDetailsFamily extends Family<AsyncValue<Campsite>> {
+  /// See also [campsiteDetails].
+  const CampsiteDetailsFamily();
+
+  /// See also [campsiteDetails].
+  CampsiteDetailsProvider call(String id) {
+    return CampsiteDetailsProvider(id);
+  }
+
+  @override
+  CampsiteDetailsProvider getProviderOverride(
+    covariant CampsiteDetailsProvider provider,
+  ) {
+    return call(provider.id);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'campsiteDetailsProvider';
+}
+
+/// See also [campsiteDetails].
+class CampsiteDetailsProvider extends AutoDisposeFutureProvider<Campsite> {
+  /// See also [campsiteDetails].
+  CampsiteDetailsProvider(String id)
+    : this._internal(
+        (ref) => campsiteDetails(ref as CampsiteDetailsRef, id),
+        from: campsiteDetailsProvider,
+        name: r'campsiteDetailsProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$campsiteDetailsHash,
+        dependencies: CampsiteDetailsFamily._dependencies,
+        allTransitiveDependencies:
+            CampsiteDetailsFamily._allTransitiveDependencies,
+        id: id,
+      );
+
+  CampsiteDetailsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
+  final String id;
+
+  @override
+  Override overrideWith(
+    FutureOr<Campsite> Function(CampsiteDetailsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: CampsiteDetailsProvider._internal(
+        (ref) => create(ref as CampsiteDetailsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Campsite> createElement() {
+    return _CampsiteDetailsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is CampsiteDetailsProvider && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef FilteredCampsitesRef = AutoDisposeProviderRef<List<Campsite>>;
-String _$campsiteFilterNotifierHash() =>
-    r'5b66c0da4ce6e9a9b5c68d84f549a3f535c31663';
+mixin CampsiteDetailsRef on AutoDisposeFutureProviderRef<Campsite> {
+  /// The parameter `id` of this provider.
+  String get id;
+}
 
-/// See also [CampsiteFilterNotifier].
-@ProviderFor(CampsiteFilterNotifier)
-final campsiteFilterNotifierProvider =
-    AutoDisposeNotifierProvider<
-      CampsiteFilterNotifier,
-      CampsiteFilter
-    >.internal(
-      CampsiteFilterNotifier.new,
-      name: r'campsiteFilterNotifierProvider',
+class _CampsiteDetailsProviderElement
+    extends AutoDisposeFutureProviderElement<Campsite>
+    with CampsiteDetailsRef {
+  _CampsiteDetailsProviderElement(super.provider);
+
+  @override
+  String get id => (origin as CampsiteDetailsProvider).id;
+}
+
+String _$filteredAndSortedCampsiteListHash() =>
+    r'1fa26da34f797354f25190ea3c1c6456c0750e2c';
+
+/// See also [filteredAndSortedCampsiteList].
+@ProviderFor(filteredAndSortedCampsiteList)
+final filteredAndSortedCampsiteListProvider =
+    AutoDisposeFutureProvider<List<Campsite>>.internal(
+      filteredAndSortedCampsiteList,
+      name: r'filteredAndSortedCampsiteListProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$campsiteFilterNotifierHash,
+          : _$filteredAndSortedCampsiteListHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$CampsiteFilterNotifier = AutoDisposeNotifier<CampsiteFilter>;
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef FilteredAndSortedCampsiteListRef =
+    AutoDisposeFutureProviderRef<List<Campsite>>;
+String _$priceRangeHash() => r'bb7f321ff08790c4a8106c649cc25dc44ef8ffa1';
+
+/// See also [priceRange].
+@ProviderFor(priceRange)
+final priceRangeProvider =
+    AutoDisposeFutureProvider<({double min, double max})>.internal(
+      priceRange,
+      name: r'priceRangeProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$priceRangeHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef PriceRangeRef =
+    AutoDisposeFutureProviderRef<({double min, double max})>;
+String _$availableHostLanguagesHash() =>
+    r'933eff5e0820149b01aa0c62f94015e08329f0e2';
+
+/// See also [availableHostLanguages].
+@ProviderFor(availableHostLanguages)
+final availableHostLanguagesProvider =
+    AutoDisposeFutureProvider<List<String>>.internal(
+      availableHostLanguages,
+      name: r'availableHostLanguagesProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$availableHostLanguagesHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AvailableHostLanguagesRef = AutoDisposeFutureProviderRef<List<String>>;
+String _$availableSuitableForHash() =>
+    r'dcee012c055984d497df9b68cf07fc93586f5d5b';
+
+/// See also [availableSuitableFor].
+@ProviderFor(availableSuitableFor)
+final availableSuitableForProvider =
+    AutoDisposeFutureProvider<List<String>>.internal(
+      availableSuitableFor,
+      name: r'availableSuitableForProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$availableSuitableForHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AvailableSuitableForRef = AutoDisposeFutureProviderRef<List<String>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

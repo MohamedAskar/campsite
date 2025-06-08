@@ -1,123 +1,110 @@
+import 'package:campsite/domain/usecases/get_campsite_details.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../../core/network/dio_client.dart';
 import '../../data/datasources/campsite_remote_datasource.dart';
 import '../../data/repositories/campsite_repository_impl.dart';
 import '../../domain/entities/campsite.dart';
-import '../../domain/entities/campsite_filter.dart';
 import '../../domain/repositories/campsite_repository.dart';
 import '../../domain/usecases/get_campsites.dart';
+import '../controllers/campsite_filter_controller.dart';
+import '../controllers/campsite_sort_controller.dart';
 
 part 'campsite_providers.g.dart';
 
 // Core providers
-@riverpod
-DioClient dioClient(DioClientRef ref) {
+@Riverpod(keepAlive: true)
+DioClient dioClient(Ref ref) {
   return DioClient();
 }
 
 @riverpod
-CampsiteRemoteDataSource campsiteRemoteDataSource(
-  CampsiteRemoteDataSourceRef ref,
-) {
+CampsiteRemoteDataSource campsiteRemoteDataSource(Ref ref) {
   return CampsiteRemoteDataSourceImpl(ref.watch(dioClientProvider));
 }
 
 @riverpod
-CampsiteRepository campsiteRepository(CampsiteRepositoryRef ref) {
+CampsiteRepository campsiteRepository(Ref ref) {
   return CampsiteRepositoryImpl(ref.watch(campsiteRemoteDataSourceProvider));
 }
 
 @riverpod
-GetCampsites getCampsites(GetCampsitesRef ref) {
+GetCampsites getCampsites(Ref ref) {
   return GetCampsites(ref.watch(campsiteRepositoryProvider));
 }
 
-// State providers
 @riverpod
-class CampsiteFilterNotifier extends _$CampsiteFilterNotifier {
-  @override
-  CampsiteFilter build() {
-    return const CampsiteFilter();
-  }
-
-  void updateSearchQuery(String query) {
-    state = state.copyWith(searchQuery: query);
-  }
-
-  void updatePriceRange(double min, double max) {
-    state = state.copyWith(minPrice: min, maxPrice: max);
-  }
-
-  void toggleCloseToWater(bool value) {
-    state = state.copyWith(isCloseToWater: value);
-  }
-
-  void toggleCampFireAllowed(bool value) {
-    state = state.copyWith(isCampFireAllowed: value);
-  }
-
-  void updateHostLanguages(List<String> languages) {
-    state = state.copyWith(hostLanguages: languages);
-  }
-
-  void clearFilters() {
-    state = const CampsiteFilter();
-  }
-
-  void updateFilter(CampsiteFilter filter) {
-    state = filter;
-  }
+GetCampsiteDetails getCampsiteDetails(Ref ref) {
+  return GetCampsiteDetails(ref.watch(campsiteRepositoryProvider));
 }
 
 @riverpod
-Future<List<Campsite>> campsiteList(CampsiteListRef ref) async {
+Future<List<Campsite>> campsiteList(Ref ref) async {
   final getCampsites = ref.watch(getCampsitesProvider);
-  return await getCampsites();
+  return await getCampsites.call();
 }
 
 @riverpod
-List<Campsite> filteredCampsites(FilteredCampsitesRef ref) {
-  final campsitesAsync = ref.watch(campsiteListProvider);
-  final filter = ref.watch(campsiteFilterNotifierProvider);
+Future<Campsite> campsiteDetails(Ref ref, String id) async {
+  final getCampsiteDetails = ref.watch(getCampsiteDetailsProvider);
+  return await getCampsiteDetails.call(id);
+}
 
-  return campsitesAsync.when(
-    data: (campsites) {
-      return campsites.where((campsite) {
-        // Search query filter
-        if (filter.searchQuery.isNotEmpty) {
-          final query = filter.searchQuery.toLowerCase();
-          if (!campsite.label.toLowerCase().contains(query)) {
-            return false;
-          }
-        }
+// Filter and Sort related providers
+@riverpod
+Future<List<Campsite>> filteredAndSortedCampsiteList(Ref ref) async {
+  final campsites = await ref.watch(campsiteListProvider.future);
+  final filterController = ref.watch(campsiteFilterControllerProvider.notifier);
+  final sortController = ref.watch(campsiteSortControllerProvider.notifier);
 
-        // Price filter
-        if (campsite.pricePerNight < filter.minPrice ||
-            campsite.pricePerNight > filter.maxPrice) {
-          return false;
-        }
+  // Watch both filter and sort to trigger rebuilds when they change
+  ref.watch(campsiteFilterControllerProvider);
+  ref.watch(campsiteSortControllerProvider);
 
-        // Feature filters
-        if (filter.isCloseToWater && !campsite.isCloseToWater) return false;
-        if (filter.isCampFireAllowed && !campsite.isCampFireAllowed)
-          return false;
+  // First apply filters, then apply sorting
+  final filteredCampsites = filterController.applyFilters(campsites);
+  return sortController.applySorting(filteredCampsites);
+}
 
-        // Host language filter
-        if (filter.hostLanguages.isNotEmpty) {
-          bool hasMatchingLanguage = false;
-          for (final lang in filter.hostLanguages) {
-            if (campsite.hostLanguages.contains(lang)) {
-              hasMatchingLanguage = true;
-              break;
-            }
-          }
-          if (!hasMatchingLanguage) return false;
-        }
+@riverpod
+Future<({double min, double max})> priceRange(Ref ref) async {
+  final campsites = await ref.watch(campsiteListProvider.future);
 
-        return true;
-      }).toList()..sort((a, b) => a.label.compareTo(b.label));
-    },
-    loading: () => [],
-    error: (_, __) => [],
-  );
+  if (campsites.isEmpty) {
+    return (min: 0.0, max: 100.0);
+  }
+
+  final prices = campsites.map((c) => c.pricePerNight).toList();
+  prices.sort();
+
+  return (min: prices.first, max: prices.last);
+}
+
+@riverpod
+Future<List<String>> availableHostLanguages(Ref ref) async {
+  final campsites = await ref.watch(campsiteListProvider.future);
+
+  final languagesSet = <String>{};
+  for (final campsite in campsites) {
+    languagesSet.addAll(campsite.hostLanguages);
+  }
+
+  final languages = languagesSet.toList();
+  languages.sort();
+  return languages;
+}
+
+@riverpod
+Future<List<String>> availableSuitableFor(Ref ref) async {
+  final campsites = await ref.watch(campsiteListProvider.future);
+
+  final categoriesSet = <String>{};
+  for (final campsite in campsites) {
+    categoriesSet.addAll(campsite.suitableFor);
+  }
+
+  final categories = categoriesSet.toList();
+  categories.sort();
+  return categories;
 }
