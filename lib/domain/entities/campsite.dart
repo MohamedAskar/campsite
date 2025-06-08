@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'geo_location.dart';
 
@@ -5,6 +7,7 @@ part 'campsite.freezed.dart';
 
 @freezed
 class Campsite with _$Campsite {
+  const Campsite._();
   const factory Campsite({
     required String id,
     required DateTime createdAt,
@@ -17,4 +20,7 @@ class Campsite with _$Campsite {
     required double pricePerNight,
     required List<String> suitableFor,
   }) = _Campsite;
+
+  List<Locale> get locales =>
+      hostLanguages.map((language) => Locale(language)).toList();
 }

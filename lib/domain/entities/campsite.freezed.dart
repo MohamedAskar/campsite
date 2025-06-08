@@ -240,7 +240,7 @@ class __$$CampsiteImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CampsiteImpl implements _Campsite {
+class _$CampsiteImpl extends _Campsite {
   const _$CampsiteImpl({
     required this.id,
     required this.createdAt,
@@ -253,7 +253,8 @@ class _$CampsiteImpl implements _Campsite {
     required this.pricePerNight,
     required final List<String> suitableFor,
   }) : _hostLanguages = hostLanguages,
-       _suitableFor = suitableFor;
+       _suitableFor = suitableFor,
+       super._();
 
   @override
   final String id;
@@ -344,7 +345,7 @@ class _$CampsiteImpl implements _Campsite {
       __$$CampsiteImplCopyWithImpl<_$CampsiteImpl>(this, _$identity);
 }
 
-abstract class _Campsite implements Campsite {
+abstract class _Campsite extends Campsite {
   const factory _Campsite({
     required final String id,
     required final DateTime createdAt,
@@ -357,6 +358,7 @@ abstract class _Campsite implements Campsite {
     required final double pricePerNight,
     required final List<String> suitableFor,
   }) = _$CampsiteImpl;
+  const _Campsite._() : super._();
 
   @override
   String get id;

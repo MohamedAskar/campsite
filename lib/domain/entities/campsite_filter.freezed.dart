@@ -17,12 +17,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CampsiteFilter {
-  String get searchQuery => throw _privateConstructorUsedError;
-  double get minPrice => throw _privateConstructorUsedError;
-  double get maxPrice => throw _privateConstructorUsedError;
-  bool get isCloseToWater => throw _privateConstructorUsedError;
-  bool get isCampFireAllowed => throw _privateConstructorUsedError;
+  double? get minPrice => throw _privateConstructorUsedError;
+  double? get maxPrice => throw _privateConstructorUsedError;
+  bool? get isCloseToWater => throw _privateConstructorUsedError;
+  bool? get isCampFireAllowed => throw _privateConstructorUsedError;
   List<String> get hostLanguages => throw _privateConstructorUsedError;
+  List<String> get suitableFor => throw _privateConstructorUsedError;
 
   /// Create a copy of CampsiteFilter
   /// with the given fields replaced by the non-null parameter values.
@@ -39,12 +39,12 @@ abstract class $CampsiteFilterCopyWith<$Res> {
   ) = _$CampsiteFilterCopyWithImpl<$Res, CampsiteFilter>;
   @useResult
   $Res call({
-    String searchQuery,
-    double minPrice,
-    double maxPrice,
-    bool isCloseToWater,
-    bool isCampFireAllowed,
+    double? minPrice,
+    double? maxPrice,
+    bool? isCloseToWater,
+    bool? isCampFireAllowed,
     List<String> hostLanguages,
+    List<String> suitableFor,
   });
 }
 
@@ -63,38 +63,38 @@ class _$CampsiteFilterCopyWithImpl<$Res, $Val extends CampsiteFilter>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? searchQuery = null,
-    Object? minPrice = null,
-    Object? maxPrice = null,
-    Object? isCloseToWater = null,
-    Object? isCampFireAllowed = null,
+    Object? minPrice = freezed,
+    Object? maxPrice = freezed,
+    Object? isCloseToWater = freezed,
+    Object? isCampFireAllowed = freezed,
     Object? hostLanguages = null,
+    Object? suitableFor = null,
   }) {
     return _then(
       _value.copyWith(
-            searchQuery: null == searchQuery
-                ? _value.searchQuery
-                : searchQuery // ignore: cast_nullable_to_non_nullable
-                      as String,
-            minPrice: null == minPrice
+            minPrice: freezed == minPrice
                 ? _value.minPrice
                 : minPrice // ignore: cast_nullable_to_non_nullable
-                      as double,
-            maxPrice: null == maxPrice
+                      as double?,
+            maxPrice: freezed == maxPrice
                 ? _value.maxPrice
                 : maxPrice // ignore: cast_nullable_to_non_nullable
-                      as double,
-            isCloseToWater: null == isCloseToWater
+                      as double?,
+            isCloseToWater: freezed == isCloseToWater
                 ? _value.isCloseToWater
                 : isCloseToWater // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isCampFireAllowed: null == isCampFireAllowed
+                      as bool?,
+            isCampFireAllowed: freezed == isCampFireAllowed
                 ? _value.isCampFireAllowed
                 : isCampFireAllowed // ignore: cast_nullable_to_non_nullable
-                      as bool,
+                      as bool?,
             hostLanguages: null == hostLanguages
                 ? _value.hostLanguages
                 : hostLanguages // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            suitableFor: null == suitableFor
+                ? _value.suitableFor
+                : suitableFor // ignore: cast_nullable_to_non_nullable
                       as List<String>,
           )
           as $Val,
@@ -112,12 +112,12 @@ abstract class _$$CampsiteFilterImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    String searchQuery,
-    double minPrice,
-    double maxPrice,
-    bool isCloseToWater,
-    bool isCampFireAllowed,
+    double? minPrice,
+    double? maxPrice,
+    bool? isCloseToWater,
+    bool? isCampFireAllowed,
     List<String> hostLanguages,
+    List<String> suitableFor,
   });
 }
 
@@ -135,38 +135,38 @@ class __$$CampsiteFilterImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? searchQuery = null,
-    Object? minPrice = null,
-    Object? maxPrice = null,
-    Object? isCloseToWater = null,
-    Object? isCampFireAllowed = null,
+    Object? minPrice = freezed,
+    Object? maxPrice = freezed,
+    Object? isCloseToWater = freezed,
+    Object? isCampFireAllowed = freezed,
     Object? hostLanguages = null,
+    Object? suitableFor = null,
   }) {
     return _then(
       _$CampsiteFilterImpl(
-        searchQuery: null == searchQuery
-            ? _value.searchQuery
-            : searchQuery // ignore: cast_nullable_to_non_nullable
-                  as String,
-        minPrice: null == minPrice
+        minPrice: freezed == minPrice
             ? _value.minPrice
             : minPrice // ignore: cast_nullable_to_non_nullable
-                  as double,
-        maxPrice: null == maxPrice
+                  as double?,
+        maxPrice: freezed == maxPrice
             ? _value.maxPrice
             : maxPrice // ignore: cast_nullable_to_non_nullable
-                  as double,
-        isCloseToWater: null == isCloseToWater
+                  as double?,
+        isCloseToWater: freezed == isCloseToWater
             ? _value.isCloseToWater
             : isCloseToWater // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        isCampFireAllowed: null == isCampFireAllowed
+                  as bool?,
+        isCampFireAllowed: freezed == isCampFireAllowed
             ? _value.isCampFireAllowed
             : isCampFireAllowed // ignore: cast_nullable_to_non_nullable
-                  as bool,
+                  as bool?,
         hostLanguages: null == hostLanguages
             ? _value._hostLanguages
             : hostLanguages // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        suitableFor: null == suitableFor
+            ? _value._suitableFor
+            : suitableFor // ignore: cast_nullable_to_non_nullable
                   as List<String>,
       ),
     );
@@ -177,30 +177,28 @@ class __$$CampsiteFilterImplCopyWithImpl<$Res>
 
 class _$CampsiteFilterImpl extends _CampsiteFilter {
   const _$CampsiteFilterImpl({
-    this.searchQuery = '',
-    this.minPrice = 0.0,
-    this.maxPrice = 1000.0,
-    this.isCloseToWater = false,
-    this.isCampFireAllowed = false,
-    final List<String> hostLanguages = const <String>[],
+    this.minPrice = null,
+    this.maxPrice = null,
+    this.isCloseToWater = null,
+    this.isCampFireAllowed = null,
+    final List<String> hostLanguages = const [],
+    final List<String> suitableFor = const [],
   }) : _hostLanguages = hostLanguages,
+       _suitableFor = suitableFor,
        super._();
 
   @override
   @JsonKey()
-  final String searchQuery;
+  final double? minPrice;
   @override
   @JsonKey()
-  final double minPrice;
+  final double? maxPrice;
   @override
   @JsonKey()
-  final double maxPrice;
+  final bool? isCloseToWater;
   @override
   @JsonKey()
-  final bool isCloseToWater;
-  @override
-  @JsonKey()
-  final bool isCampFireAllowed;
+  final bool? isCampFireAllowed;
   final List<String> _hostLanguages;
   @override
   @JsonKey()
@@ -210,9 +208,18 @@ class _$CampsiteFilterImpl extends _CampsiteFilter {
     return EqualUnmodifiableListView(_hostLanguages);
   }
 
+  final List<String> _suitableFor;
+  @override
+  @JsonKey()
+  List<String> get suitableFor {
+    if (_suitableFor is EqualUnmodifiableListView) return _suitableFor;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_suitableFor);
+  }
+
   @override
   String toString() {
-    return 'CampsiteFilter(searchQuery: $searchQuery, minPrice: $minPrice, maxPrice: $maxPrice, isCloseToWater: $isCloseToWater, isCampFireAllowed: $isCampFireAllowed, hostLanguages: $hostLanguages)';
+    return 'CampsiteFilter(minPrice: $minPrice, maxPrice: $maxPrice, isCloseToWater: $isCloseToWater, isCampFireAllowed: $isCampFireAllowed, hostLanguages: $hostLanguages, suitableFor: $suitableFor)';
   }
 
   @override
@@ -220,8 +227,6 @@ class _$CampsiteFilterImpl extends _CampsiteFilter {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CampsiteFilterImpl &&
-            (identical(other.searchQuery, searchQuery) ||
-                other.searchQuery == searchQuery) &&
             (identical(other.minPrice, minPrice) ||
                 other.minPrice == minPrice) &&
             (identical(other.maxPrice, maxPrice) ||
@@ -233,18 +238,22 @@ class _$CampsiteFilterImpl extends _CampsiteFilter {
             const DeepCollectionEquality().equals(
               other._hostLanguages,
               _hostLanguages,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._suitableFor,
+              _suitableFor,
             ));
   }
 
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    searchQuery,
     minPrice,
     maxPrice,
     isCloseToWater,
     isCampFireAllowed,
     const DeepCollectionEquality().hash(_hostLanguages),
+    const DeepCollectionEquality().hash(_suitableFor),
   );
 
   /// Create a copy of CampsiteFilter
@@ -261,27 +270,27 @@ class _$CampsiteFilterImpl extends _CampsiteFilter {
 
 abstract class _CampsiteFilter extends CampsiteFilter {
   const factory _CampsiteFilter({
-    final String searchQuery,
-    final double minPrice,
-    final double maxPrice,
-    final bool isCloseToWater,
-    final bool isCampFireAllowed,
+    final double? minPrice,
+    final double? maxPrice,
+    final bool? isCloseToWater,
+    final bool? isCampFireAllowed,
     final List<String> hostLanguages,
+    final List<String> suitableFor,
   }) = _$CampsiteFilterImpl;
   const _CampsiteFilter._() : super._();
 
   @override
-  String get searchQuery;
+  double? get minPrice;
   @override
-  double get minPrice;
+  double? get maxPrice;
   @override
-  double get maxPrice;
+  bool? get isCloseToWater;
   @override
-  bool get isCloseToWater;
-  @override
-  bool get isCampFireAllowed;
+  bool? get isCampFireAllowed;
   @override
   List<String> get hostLanguages;
+  @override
+  List<String> get suitableFor;
 
   /// Create a copy of CampsiteFilter
   /// with the given fields replaced by the non-null parameter values.
