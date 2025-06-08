@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 
-import '../../presentation/pages/campsite_detail_page.dart';
+import '../../presentation/pages/campsite-details/campsite_detail_page.dart';
 import '../../presentation/pages/home/home_page.dart';
 
 class AppRouter {

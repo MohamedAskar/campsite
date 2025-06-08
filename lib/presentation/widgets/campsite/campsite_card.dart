@@ -1,14 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:campsite/core/constants/campsite_assets.dart';
 import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/core/extensions/strings.dart';
 import 'package:campsite/core/extensions/text_style.dart';
+import 'package:campsite/presentation/widgets/campsite/campsite_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../domain/entities/campsite.dart';
-import 'amenity_widget.dart';
+import 'amenity_icon.dart';
 
 class CampsiteCard extends StatelessWidget {
   final Campsite campsite;
@@ -28,10 +28,7 @@ class CampsiteCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: AspectRatio(
               aspectRatio: 16 / 9,
-              child: CachedNetworkImage(
-                imageUrl: campsite.photo,
-                fit: BoxFit.cover,
-              ),
+              child: CampsiteImage(imageUrl: campsite.photo),
             ),
           ),
           const SizedBox(height: 4),
@@ -59,13 +56,13 @@ class CampsiteCard extends StatelessWidget {
             runSpacing: 4,
             children: [
               if (campsite.isCloseToWater)
-                AmenityWidget(
-                  icon: LucideIcons.waves,
+                AmenityIcon(
+                  icon: CampsiteAssets.water,
                   available: campsite.isCloseToWater,
                 ),
               if (campsite.isCampFireAllowed)
-                AmenityWidget(
-                  icon: LucideIcons.flameKindling,
+                AmenityIcon(
+                  icon: CampsiteAssets.campfire,
                   available: campsite.isCampFireAllowed,
                 ),
             ],

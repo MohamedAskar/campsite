@@ -14,7 +14,7 @@ class CampsiteRepositoryImpl implements CampsiteRepository {
       final campsites = campsiteModels
           .map((model) => model.toDomain())
           .toList();
-      // Remove default sorting since we handle it in the UI layer
+      campsites.sort((a, b) => a.label.compareTo(b.label));
       return campsites;
     } catch (e) {
       throw Exception('Failed to get campsites: $e');

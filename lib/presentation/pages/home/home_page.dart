@@ -1,9 +1,7 @@
 import 'package:campsite/core/constants/campsite_assets.dart';
 import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/core/extensions/text_style.dart';
-import 'package:campsite/domain/entities/campsite_sort.dart';
 import 'package:campsite/presentation/controllers/campsite_filter_controller.dart';
-import 'package:campsite/presentation/controllers/campsite_sort_controller.dart';
 import 'package:campsite/presentation/providers/campsite_providers.dart';
 import 'package:campsite/presentation/widgets/campsite/campsite_card.dart';
 import 'package:campsite/presentation/widgets/campsite/campsite_filter_sheet.dart';
@@ -16,7 +14,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final campsitesAsync = ref.watch(filteredAndSortedCampsiteListProvider);
+    final campsitesAsync = ref.watch(filteredCampsiteListProvider);
     final filter = ref.watch(campsiteFilterControllerProvider);
 
     return Scaffold(
@@ -41,7 +39,7 @@ class HomePage extends ConsumerWidget {
                     ),
                     TextSpan(
                       text: '\nadventure',
-                      style: context.textTheme.titleLarge?.bold.copyWith(
+                      style: context.textTheme.headlineMedium?.bold.copyWith(
                         color: context.colorScheme.primary,
                       ),
                     ),
@@ -56,39 +54,28 @@ class HomePage extends ConsumerWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                children: [
-                  // Sort button
-                  TextButton.icon(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: Badge(
+                  isLabelVisible: filter.hasActiveFilters,
+                  label: Text('${filter.activeFilterCount}'),
+                  child: TextButton.icon(
                     onPressed: () {
-                      _showSortOptions(context, ref);
+                      showModalBottomSheet(
+                        context: context,
+                        isDismissible: true,
+                        showDragHandle: true,
+                        useSafeArea: true,
+                        useRootNavigator: true,
+                        isScrollControlled: true,
+                        builder: (context) => const CampsiteFilterSheet(),
+                      );
                     },
-                    icon: Icon(LucideIcons.arrowUpDown),
-                    label: Text('Sort'),
+                    icon: Icon(LucideIcons.slidersHorizontal),
+                    label: Text('Filters'),
                   ),
-                  const Spacer(),
-                  // Filter button with badge
-                  Badge(
-                    isLabelVisible: filter.hasActiveFilters,
-                    label: Text('${filter.activeFilterCount}'),
-                    child: TextButton.icon(
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isDismissible: true,
-                          showDragHandle: true,
-                          useSafeArea: true,
-                          useRootNavigator: true,
-                          isScrollControlled: true,
-                          builder: (context) => const CampsiteFilterSheet(),
-                        );
-                      },
-                      icon: Icon(LucideIcons.slidersHorizontal),
-                      label: Text('Filters'),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
@@ -136,51 +123,5 @@ class HomePage extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  void _showSortOptions(BuildContext context, WidgetRef ref) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Sort by', style: context.textTheme.headlineSmall?.bold),
-            const SizedBox(height: 16),
-            ...CampsiteSortType.values.map((sortType) {
-              final currentSort = ref.watch(campsiteSortControllerProvider);
-              final isSelected = currentSort.sortType == sortType;
-
-              return ListTile(
-                leading: _getSortIcon(sortType),
-                title: Text(sortType.displayName),
-                trailing: isSelected ? Icon(LucideIcons.check) : null,
-                selected: isSelected,
-                onTap: () {
-                  ref
-                      .read(campsiteSortControllerProvider.notifier)
-                      .updateSortType(sortType);
-                  Navigator.of(context).pop();
-                },
-              );
-            }),
-            const SizedBox(height: 16),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _getSortIcon(CampsiteSortType sortType) {
-    switch (sortType) {
-      case CampsiteSortType.priceAsc:
-      case CampsiteSortType.priceDesc:
-        return Icon(LucideIcons.euro);
-      case CampsiteSortType.newestFirst:
-      case CampsiteSortType.oldestFirst:
-        return Icon(LucideIcons.calendar);
-    }
   }
 }

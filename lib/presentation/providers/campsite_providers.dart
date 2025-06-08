@@ -1,15 +1,16 @@
 import 'package:campsite/domain/usecases/get_campsite_details.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/network/dio_client.dart';
 import '../../data/datasources/campsite_remote_datasource.dart';
 import '../../data/repositories/campsite_repository_impl.dart';
 import '../../domain/entities/campsite.dart';
+import '../../domain/entities/geo_location.dart';
 import '../../domain/repositories/campsite_repository.dart';
 import '../../domain/usecases/get_campsites.dart';
 import '../controllers/campsite_filter_controller.dart';
-import '../controllers/campsite_sort_controller.dart';
 
 part 'campsite_providers.g.dart';
 
@@ -53,18 +54,16 @@ Future<Campsite> campsiteDetails(Ref ref, String id) async {
 
 // Filter and Sort related providers
 @riverpod
-Future<List<Campsite>> filteredAndSortedCampsiteList(Ref ref) async {
+Future<List<Campsite>> filteredCampsiteList(Ref ref) async {
   final campsites = await ref.watch(campsiteListProvider.future);
   final filterController = ref.watch(campsiteFilterControllerProvider.notifier);
-  final sortController = ref.watch(campsiteSortControllerProvider.notifier);
 
   // Watch both filter and sort to trigger rebuilds when they change
   ref.watch(campsiteFilterControllerProvider);
-  ref.watch(campsiteSortControllerProvider);
 
   // First apply filters, then apply sorting
   final filteredCampsites = filterController.applyFilters(campsites);
-  return sortController.applySorting(filteredCampsites);
+  return filteredCampsites;
 }
 
 @riverpod
@@ -107,4 +106,13 @@ Future<List<String>> availableSuitableFor(Ref ref) async {
   final categories = categoriesSet.toList();
   categories.sort();
   return categories;
+}
+
+@riverpod
+Future<Placemark?> campsiteLocation(Ref ref, GeoLocation geoLocation) async {
+  final placemarks = await placemarkFromCoordinates(
+    geoLocation.lat,
+    geoLocation.long,
+  );
+  return placemarks.firstOrNull;
 }

@@ -1,10 +1,10 @@
 import 'package:campsite/core/extensions/context.dart';
 import 'package:flutter/material.dart';
 
-class AmenityWidget extends StatelessWidget {
-  const AmenityWidget({super.key, required this.icon, required this.available});
+class AmenityIcon extends StatelessWidget {
+  const AmenityIcon({super.key, required this.icon, required this.available});
 
-  final IconData icon;
+  final String icon;
   final bool available;
 
   @override
@@ -15,7 +15,7 @@ class AmenityWidget extends StatelessWidget {
         shape: BoxShape.circle,
         color: context.colorScheme.primaryContainer,
       ),
-      child: Icon(icon, size: 18, color: context.colorScheme.onSurface),
+      child: Image.asset(icon, width: 24, height: 24),
     );
   }
 }

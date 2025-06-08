@@ -34,12 +34,15 @@ dependencies:
   flutter_map: ^8.1.1
   latlong2: ^0.9.1
   geolocator: ^10.1.0
+  geocoding: ^3.0.0
   permission_handler: ^11.1.0
 
   # Utilities
   cached_network_image: ^3.3.0
   lottie: ^2.7.0
   intl: ^0.20.2
+  locale_names: ^1.1.1
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:

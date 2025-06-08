@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'geo_location.dart';
 
@@ -21,6 +19,5 @@ class Campsite with _$Campsite {
     required List<String> suitableFor,
   }) = _Campsite;
 
-  List<Locale> get locales =>
-      hostLanguages.map((language) => Locale(language)).toList();
+  int get yearsOfHosting => DateTime.now().year - createdAt.year;
 }

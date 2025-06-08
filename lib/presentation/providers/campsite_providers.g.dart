@@ -256,26 +256,25 @@ class _CampsiteDetailsProviderElement
   String get id => (origin as CampsiteDetailsProvider).id;
 }
 
-String _$filteredAndSortedCampsiteListHash() =>
-    r'1fa26da34f797354f25190ea3c1c6456c0750e2c';
+String _$filteredCampsiteListHash() =>
+    r'f90e6e7cef1c51fe7671739d19cb67d79cacd542';
 
-/// See also [filteredAndSortedCampsiteList].
-@ProviderFor(filteredAndSortedCampsiteList)
-final filteredAndSortedCampsiteListProvider =
+/// See also [filteredCampsiteList].
+@ProviderFor(filteredCampsiteList)
+final filteredCampsiteListProvider =
     AutoDisposeFutureProvider<List<Campsite>>.internal(
-      filteredAndSortedCampsiteList,
-      name: r'filteredAndSortedCampsiteListProvider',
+      filteredCampsiteList,
+      name: r'filteredCampsiteListProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$filteredAndSortedCampsiteListHash,
+          : _$filteredCampsiteListHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef FilteredAndSortedCampsiteListRef =
-    AutoDisposeFutureProviderRef<List<Campsite>>;
+typedef FilteredCampsiteListRef = AutoDisposeFutureProviderRef<List<Campsite>>;
 String _$priceRangeHash() => r'bb7f321ff08790c4a8106c649cc25dc44ef8ffa1';
 
 /// See also [priceRange].
@@ -333,5 +332,127 @@ final availableSuitableForProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AvailableSuitableForRef = AutoDisposeFutureProviderRef<List<String>>;
+String _$campsiteLocationHash() => r'7408d1879d5c93c2a4dddbadb12d29ad97220b8b';
+
+/// See also [campsiteLocation].
+@ProviderFor(campsiteLocation)
+const campsiteLocationProvider = CampsiteLocationFamily();
+
+/// See also [campsiteLocation].
+class CampsiteLocationFamily extends Family<AsyncValue<Placemark?>> {
+  /// See also [campsiteLocation].
+  const CampsiteLocationFamily();
+
+  /// See also [campsiteLocation].
+  CampsiteLocationProvider call(GeoLocation geoLocation) {
+    return CampsiteLocationProvider(geoLocation);
+  }
+
+  @override
+  CampsiteLocationProvider getProviderOverride(
+    covariant CampsiteLocationProvider provider,
+  ) {
+    return call(provider.geoLocation);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'campsiteLocationProvider';
+}
+
+/// See also [campsiteLocation].
+class CampsiteLocationProvider extends AutoDisposeFutureProvider<Placemark?> {
+  /// See also [campsiteLocation].
+  CampsiteLocationProvider(GeoLocation geoLocation)
+    : this._internal(
+        (ref) => campsiteLocation(ref as CampsiteLocationRef, geoLocation),
+        from: campsiteLocationProvider,
+        name: r'campsiteLocationProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$campsiteLocationHash,
+        dependencies: CampsiteLocationFamily._dependencies,
+        allTransitiveDependencies:
+            CampsiteLocationFamily._allTransitiveDependencies,
+        geoLocation: geoLocation,
+      );
+
+  CampsiteLocationProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.geoLocation,
+  }) : super.internal();
+
+  final GeoLocation geoLocation;
+
+  @override
+  Override overrideWith(
+    FutureOr<Placemark?> Function(CampsiteLocationRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: CampsiteLocationProvider._internal(
+        (ref) => create(ref as CampsiteLocationRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        geoLocation: geoLocation,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Placemark?> createElement() {
+    return _CampsiteLocationProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is CampsiteLocationProvider &&
+        other.geoLocation == geoLocation;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, geoLocation.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin CampsiteLocationRef on AutoDisposeFutureProviderRef<Placemark?> {
+  /// The parameter `geoLocation` of this provider.
+  GeoLocation get geoLocation;
+}
+
+class _CampsiteLocationProviderElement
+    extends AutoDisposeFutureProviderElement<Placemark?>
+    with CampsiteLocationRef {
+  _CampsiteLocationProviderElement(super.provider);
+
+  @override
+  GeoLocation get geoLocation =>
+      (origin as CampsiteLocationProvider).geoLocation;
+}
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -1,6 +1,6 @@
+import 'package:campsite/core/constants/campsite_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../core/extensions/context.dart';
 import '../../../core/extensions/text_style.dart';
@@ -18,124 +18,103 @@ class CampsiteFilterSheet extends ConsumerWidget {
     final availableCategoriesAsync = ref.watch(availableSuitableForProvider);
 
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
+          Column(
+            spacing: 16,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                child: Text(
-                  'Filters',
-                  style: context.textTheme.headlineSmall?.bold,
-                ),
-              ),
-              const Spacer(),
-              if (filter.hasActiveFilters)
-                TextButton(
-                  onPressed: () {
+              // Price Range Filter
+              priceRangeAsync.when(
+                data: (priceRange) => _PriceRangeSection(
+                  minPrice: priceRange.min,
+                  maxPrice: priceRange.max,
+                  currentMinPrice: filter.minPrice ?? priceRange.min,
+                  currentMaxPrice: filter.maxPrice ?? priceRange.max,
+                  onRangeChanged: (min, max) {
                     ref
                         .read(campsiteFilterControllerProvider.notifier)
-                        .clearFilters();
+                        .updatePriceRange(min, max);
                   },
-                  child: Text('Clear All'),
                 ),
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stack) => const SizedBox.shrink(),
+              ),
+
+              // Amenities Section
+              _AmenitiesSection(
+                isCloseToWater: filter.isCloseToWater,
+                isCampFireAllowed: filter.isCampFireAllowed,
+                onWaterChanged: (value) {
+                  ref
+                      .read(campsiteFilterControllerProvider.notifier)
+                      .updateIsCloseToWater(value);
+                },
+                onCampFireChanged: (value) {
+                  ref
+                      .read(campsiteFilterControllerProvider.notifier)
+                      .updateIsCampFireAllowed(value);
+                },
+              ),
+
+              // Host Languages Section
+              availableLanguagesAsync.when(
+                data: (languages) => _LanguagesSection(
+                  availableLanguages: languages,
+                  selectedLanguages: filter.hostLanguages,
+                  onLanguageToggled: (language) {
+                    ref
+                        .read(campsiteFilterControllerProvider.notifier)
+                        .toggleHostLanguage(language);
+                  },
+                ),
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stack) => const SizedBox.shrink(),
+              ),
+
+              // Suitable For Section
+              availableCategoriesAsync.when(
+                data: (categories) => _SuitableForSection(
+                  availableCategories: categories,
+                  selectedCategories: filter.suitableFor,
+                  onCategoryToggled: (category) {
+                    ref
+                        .read(campsiteFilterControllerProvider.notifier)
+                        .toggleSuitableFor(category);
+                  },
+                ),
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stack) => const SizedBox.shrink(),
+              ),
             ],
           ),
-
-          Container(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              spacing: 24,
-              crossAxisAlignment: CrossAxisAlignment.start,
+          const SizedBox(height: 16),
+          SafeArea(
+            top: false,
+            child: Row(
+              spacing: 8,
               children: [
-                // Price Range Filter
-                priceRangeAsync.when(
-                  data: (priceRange) => _PriceRangeSection(
-                    minPrice: priceRange.min,
-                    maxPrice: priceRange.max,
-                    currentMinPrice: filter.minPrice ?? priceRange.min,
-                    currentMaxPrice: filter.maxPrice ?? priceRange.max,
-                    onRangeChanged: (min, max) {
+                if (filter.hasActiveFilters)
+                  OutlinedButton(
+                    onPressed: () {
                       ref
                           .read(campsiteFilterControllerProvider.notifier)
-                          .updatePriceRange(min, max);
+                          .clearFilters();
                     },
+                    child: Text('Clear'),
                   ),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                  error: (error, stack) => const SizedBox.shrink(),
-                ),
-
-                // Amenities Section
-                _AmenitiesSection(
-                  isCloseToWater: filter.isCloseToWater,
-                  isCampFireAllowed: filter.isCampFireAllowed,
-                  onWaterChanged: (value) {
-                    ref
-                        .read(campsiteFilterControllerProvider.notifier)
-                        .updateIsCloseToWater(value);
-                  },
-                  onCampFireChanged: (value) {
-                    ref
-                        .read(campsiteFilterControllerProvider.notifier)
-                        .updateIsCampFireAllowed(value);
-                  },
-                ),
-
-                // Host Languages Section
-                availableLanguagesAsync.when(
-                  data: (languages) => _LanguagesSection(
-                    availableLanguages: languages,
-                    selectedLanguages: filter.hostLanguages,
-                    onLanguageToggled: (language) {
-                      ref
-                          .read(campsiteFilterControllerProvider.notifier)
-                          .toggleHostLanguage(language);
-                    },
+                Expanded(
+                  child: FilledButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('Apply Filters'),
                   ),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                  error: (error, stack) => const SizedBox.shrink(),
-                ),
-
-                // Suitable For Section
-                availableCategoriesAsync.when(
-                  data: (categories) => _SuitableForSection(
-                    availableCategories: categories,
-                    selectedCategories: filter.suitableFor,
-                    onCategoryToggled: (category) {
-                      ref
-                          .read(campsiteFilterControllerProvider.notifier)
-                          .toggleSuitableFor(category);
-                    },
-                  ),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                  error: (error, stack) => const SizedBox.shrink(),
                 ),
               ],
-            ),
-          ),
-
-          // Apply button
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: SafeArea(
-              top: false,
-              child: SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Apply Filters'),
-                ),
-              ),
             ),
           ),
         ],
@@ -246,14 +225,14 @@ class _AmenitiesSection extends StatelessWidget {
         const SizedBox(height: 12),
         _FilterChip(
           label: 'Close to Water',
-          icon: LucideIcons.waves,
+          icon: CampsiteAssets.water,
           value: isCloseToWater,
           onChanged: onWaterChanged,
         ),
         const SizedBox(height: 8),
         _FilterChip(
           label: 'Campfire Allowed',
-          icon: LucideIcons.flameKindling,
+          icon: CampsiteAssets.campfire,
           value: isCampFireAllowed,
           onChanged: onCampFireChanged,
         ),
@@ -350,7 +329,7 @@ class _SuitableForSection extends StatelessWidget {
 
 class _FilterChip extends StatelessWidget {
   final String label;
-  final IconData icon;
+  final String icon;
   final bool? value;
   final void Function(bool?) onChanged;
 
@@ -364,13 +343,13 @@ class _FilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: 8,
+      spacing: 4,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          spacing: 8,
+          spacing: 4,
           children: [
-            Icon(icon, size: 20),
+            Image.asset(icon, width: 32, height: 32),
             Text(label, style: context.textTheme.titleSmall),
           ],
         ),
