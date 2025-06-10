@@ -3,6 +3,7 @@ import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/core/extensions/strings.dart';
 import 'package:campsite/core/extensions/text_style.dart';
 import 'package:campsite/presentation/widgets/campsite/campsite_image.dart';
+import 'package:campsite/presentation/widgets/text_style_injector.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +18,9 @@ class CampsiteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final price = NumberFormat.currency(
+      symbol: '€',
+    ).format(campsite.pricePerNight);
     return InkWell(
       onTap: () {
         context.pushNamed('campsite', pathParameters: {'id': campsite.id});
@@ -37,18 +41,10 @@ class CampsiteCard extends StatelessWidget {
             style: context.textTheme.titleMedium?.bold,
           ),
           const SizedBox(height: 2),
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: NumberFormat.currency(
-                    symbol: '€',
-                  ).format(campsite.pricePerNight),
-                  style: context.textTheme.titleSmall?.bold,
-                ),
-                TextSpan(text: ' night', style: context.textTheme.bodySmall),
-              ],
-            ),
+          TextStyleInjector(
+            text: '$price per night',
+            replacementTextList: [price],
+            replacementStyle: context.textTheme.titleSmall?.bold,
           ),
           const SizedBox(height: 4),
           Wrap(

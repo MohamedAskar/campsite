@@ -1,11 +1,10 @@
 import 'package:campsite/core/constants/campsite_assets.dart';
+import 'package:campsite/core/extensions/context.dart';
+import 'package:campsite/core/extensions/text_style.dart';
+import 'package:campsite/presentation/controllers/campsite_filter_controller.dart';
+import 'package:campsite/presentation/providers/campsite_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../core/extensions/context.dart';
-import '../../../core/extensions/text_style.dart';
-import '../../controllers/campsite_filter_controller.dart';
-import '../../providers/campsite_providers.dart';
 
 class CampsiteFilterSheet extends ConsumerWidget {
   const CampsiteFilterSheet({super.key});
@@ -111,7 +110,7 @@ class CampsiteFilterSheet extends ConsumerWidget {
                 Expanded(
                   child: FilledButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text('Apply Filters'),
+                    child: Text(context.l10n.applyFilters),
                   ),
                 ),
               ],
@@ -224,14 +223,14 @@ class _AmenitiesSection extends StatelessWidget {
         Text('Amenities', style: context.textTheme.titleMedium?.bold),
         const SizedBox(height: 12),
         _FilterChip(
-          label: 'Close to Water',
+          label: 'Close to water',
           icon: CampsiteAssets.water,
           value: isCloseToWater,
           onChanged: onWaterChanged,
         ),
         const SizedBox(height: 8),
         _FilterChip(
-          label: 'Campfire Allowed',
+          label: 'Campfire allowed',
           icon: CampsiteAssets.campfire,
           value: isCampFireAllowed,
           onChanged: onCampFireChanged,
@@ -358,7 +357,7 @@ class _FilterChip extends StatelessWidget {
           child: SegmentedButton<bool?>(
             showSelectedIcon: false,
 
-            segments: const [
+            segments: [
               ButtonSegment<bool?>(value: null, label: Text('Any')),
               ButtonSegment<bool?>(value: true, label: Text('Yes')),
               ButtonSegment<bool?>(value: false, label: Text('No')),

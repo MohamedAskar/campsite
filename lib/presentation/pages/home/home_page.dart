@@ -1,13 +1,18 @@
 import 'package:campsite/core/constants/campsite_assets.dart';
 import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/core/extensions/text_style.dart';
-import 'package:campsite/presentation/controllers/campsite_filter_controller.dart';
+import 'package:campsite/presentation/pages/home/widgets/filters_app_bar_button.dart';
 import 'package:campsite/presentation/providers/campsite_providers.dart';
-import 'package:campsite/presentation/widgets/campsite/campsite_card.dart';
-import 'package:campsite/presentation/widgets/campsite/campsite_filter_sheet.dart';
+import 'package:campsite/presentation/widgets/common/skeleton_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+
+import 'controller/home_controller.dart';
+import 'widgets/home_floating_button.dart';
+import 'widgets/home_map.dart';
+import 'widgets/home_sheet.dart';
+import 'widgets/selected_campsite_card.dart';
+import 'widgets/skeletons/home_page_skeleton.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -15,113 +20,76 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final campsitesAsync = ref.watch(filteredCampsiteListProvider);
-    final filter = ref.watch(campsiteFilterControllerProvider);
+    final homeState = ref.watch(homeControllerProvider);
+    final homeController = ref.read(homeControllerProvider.notifier);
+
+    final mapController = homeState.mapController;
+    final draggableController = homeState.draggableController;
+    final showFloatingButton = homeState.showFloatingButton;
+    final selectedCampsite = homeState.selectedCampsite;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         centerTitle: false,
-        title: SizedBox.square(
-          dimension: 64,
-          child: Image.asset(CampsiteAssets.campsite),
-        ),
-      ),
-      body: CustomScrollView(
-        slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            sliver: SliverToBoxAdapter(
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Are you ready for new ',
-                      style: context.textTheme.titleLarge?.bold,
-                    ),
-                    TextSpan(
-                      text: '\nadventure',
-                      style: context.textTheme.headlineMedium?.bold.copyWith(
-                        color: context.colorScheme.primary,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '?',
-                      style: context.textTheme.titleLarge?.bold,
-                    ),
-                  ],
-                ),
-              ),
+        toolbarHeight: 72,
+        title: Row(
+          spacing: 4,
+          children: [
+            SizedBox.square(
+              dimension: 64,
+              child: Image.asset(CampsiteAssets.campsite),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Align(
-                alignment: AlignmentDirectional.centerEnd,
-                child: Badge(
-                  isLabelVisible: filter.hasActiveFilters,
-                  label: Text('${filter.activeFilterCount}'),
-                  child: TextButton.icon(
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isDismissible: true,
-                        showDragHandle: true,
-                        useSafeArea: true,
-                        useRootNavigator: true,
-                        isScrollControlled: true,
-                        builder: (context) => const CampsiteFilterSheet(),
-                      );
-                    },
-                    icon: Icon(LucideIcons.slidersHorizontal),
-                    label: Text('Filters'),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          campsitesAsync.when(
-            data: (campsites) {
-              return SliverSafeArea(
-                sliver: SliverList.separated(
-                  itemCount: campsites.length,
-                  separatorBuilder: (context, index) => SizedBox(height: 16),
-                  itemBuilder: (context, index) {
-                    final campsite = campsites[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: CampsiteCard(campsite: campsite),
-                    );
-                  },
-                ),
-              );
-            },
-            error: (error, stackTrace) =>
-                SliverToBoxAdapter(child: Text('Error: $error')),
-            loading: () => SliverToBoxAdapter(
-              child: Center(child: CircularProgressIndicator()),
-            ),
-          ),
-          SliverToBoxAdapter(child: SizedBox(height: 56)),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: DecoratedBox(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: context.colorScheme.shadow.withValues(alpha: 0.5),
-              blurRadius: 24,
-              spreadRadius: 0,
-              offset: Offset(0, 5),
+            Text(
+              context.l10n.campsites,
+              style: context.textTheme.titleLarge?.bold,
             ),
           ],
         ),
-        child: FilledButton.icon(
-          onPressed: () {},
-          icon: Icon(LucideIcons.map),
-          label: Text('Map'),
-        ),
+        actions: [
+          campsitesAsync.whenOrNull(
+                data: (campsites) => FiltersAppBarButton(),
+                loading: () => Padding(
+                  padding: const EdgeInsetsDirectional.only(end: 8),
+                  child: SkeletonLoader.circular(size: 32),
+                ),
+              ) ??
+              const SizedBox.shrink(),
+        ],
       ),
+      body: campsitesAsync.when(
+        data: (campsites) {
+          return Stack(
+            children: [
+              HomeMap(
+                campsites: campsites,
+                mapController: mapController,
+                onClusterTap: homeController.fitClusterToBounds,
+                onMarkerTap: homeController.selectCampsite,
+              ),
+              if (selectedCampsite != null)
+                SelectedCampsiteCard(
+                  campsite: selectedCampsite,
+                  onClose: homeController.clearSelectedCampsite,
+                )
+              else
+                HomeSheet(
+                  campsites: campsites,
+                  draggableController: draggableController,
+                ),
+            ],
+          );
+        },
+        loading: () => const HomePageSkeleton(),
+        error: (error, stackTrace) =>
+            Center(child: Text('Error: ${error.toString()}')),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: showFloatingButton
+          ? HomeFloatingButton(
+              onPressed: homeController.onFloatingButtonPressed,
+            )
+          : null,
     );
   }
 }
