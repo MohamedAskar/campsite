@@ -136,6 +136,12 @@ abstract class AppLocalizations {
   /// **'Clear Filters'**
   String get clearFilters;
 
+  /// No description provided for @clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clear;
+
   /// No description provided for @searchCampsites.
   ///
   /// In en, this message translates to:
@@ -280,11 +286,173 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get retry;
 
+  /// No description provided for @hostLanguages.
+  ///
+  /// In en, this message translates to:
+  /// **'Host Languages'**
+  String get hostLanguages;
+
+  /// No description provided for @suitableFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Suitable For'**
+  String get suitableFor;
+
+  /// No description provided for @any.
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get any;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @campFireAllowedDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Camp fire allowed'**
+  String get campFireAllowedDescription;
+
+  /// No description provided for @campFireNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not allowed'**
+  String get campFireNotAllowed;
+
+  /// No description provided for @campFireAllowedInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'You can set a camp fire here, try to be careful with the fire.'**
+  String get campFireAllowedInfo;
+
+  /// No description provided for @campFireNotAllowedInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'No camp fire allowed at this campsite'**
+  String get campFireNotAllowedInfo;
+
+  /// No description provided for @closeToWaterDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Close to water'**
+  String get closeToWaterDescription;
+
+  /// No description provided for @notCloseToWater.
+  ///
+  /// In en, this message translates to:
+  /// **'Not close to water'**
+  String get notCloseToWater;
+
+  /// No description provided for @closeToWaterInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'You can fish, swim or just relax by the water'**
+  String get closeToWaterInfo;
+
+  /// No description provided for @noWaterAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'No water access at this campsite'**
+  String get noWaterAccess;
+
+  /// No description provided for @unknownLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown location'**
+  String get unknownLocation;
+
+  /// No description provided for @locationUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Location unavailable'**
+  String get locationUnavailable;
+
+  /// No description provided for @mapView.
+  ///
+  /// In en, this message translates to:
+  /// **'Map View'**
+  String get mapView;
+
+  /// No description provided for @googleMapsIntegration.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Maps integration would be implemented here'**
+  String get googleMapsIntegration;
+
+  /// No description provided for @errorLoadingMapData.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading map data'**
+  String get errorLoadingMapData;
+
+  /// No description provided for @information.
+  ///
+  /// In en, this message translates to:
+  /// **'Information'**
+  String get information;
+
+  /// No description provided for @navigate.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate'**
+  String get navigate;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String error(String error);
+
+  /// No description provided for @perNight.
+  ///
+  /// In en, this message translates to:
+  /// **'per night'**
+  String get perNight;
+
+  /// No description provided for @yearsOfHosting.
+  ///
+  /// In en, this message translates to:
+  /// **'The Camp has been hosting people for over {years} years'**
+  String yearsOfHosting(int years);
+
+  /// No description provided for @hostSpeaksLanguages.
+  ///
+  /// In en, this message translates to:
+  /// **'Hosts speaks {languages}'**
+  String hostSpeaksLanguages(String languages);
+
+  /// No description provided for @resultsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Around {count} results available'**
+  String resultsAvailable(int count);
+
   /// No description provided for @campsitesFound.
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =0{No campsites} =1{1 campsite} other{{count} campsites}} found'**
   String campsitesFound(int count);
+
+  /// No description provided for @campsitesOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} campsites would be displayed on the map'**
+  String campsitesOnMap(int count);
+
+  /// No description provided for @themeMode.
+  ///
+  /// In en, this message translates to:
+  /// **'{mode, select, light{Light} dark{Dark} system{System} other{Unknown}}'**
+  String themeMode(String mode);
 }
 
 class _AppLocalizationsDelegate

@@ -6,6 +6,7 @@
     "filters": "Filters",
     "applyFilters": "Apply Filters",
     "clearFilters": "Clear Filters",
+    "clear": "Clear",
     "searchCampsites": "Search campsites...",
     "price": "Price",
     "pricePerNight": "Price per night",
@@ -30,11 +31,81 @@
     "tryAdjustingFilters": "Try adjusting your filters",
     "errorLoadingCampsites": "Error loading campsites",
     "retry": "Retry",
+    "hostLanguages": "Host Languages",
+    "suitableFor": "Suitable For",
+    "any": "Any",
+    "yes": "Yes",
+    "no": "No",
+    "campFireAllowedDescription": "Camp fire allowed",
+    "campFireNotAllowed": "Not allowed",
+    "campFireAllowedInfo": "You can set a camp fire here, try to be careful with the fire.",
+    "campFireNotAllowedInfo": "No camp fire allowed at this campsite",
+    "closeToWaterDescription": "Close to water",
+    "notCloseToWater": "Not close to water",
+    "closeToWaterInfo": "You can fish, swim or just relax by the water",
+    "noWaterAccess": "No water access at this campsite",
+    "unknownLocation": "Unknown location",
+    "locationUnavailable": "Location unavailable",
+    "mapView": "Map View",
+    "googleMapsIntegration": "Google Maps integration would be implemented here",
+    "errorLoadingMapData": "Error loading map data",
+    "information": "Information",
+    "navigate": "Navigate",
+    "error": "Error: {error}",
+    "@error": {
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "perNight": "per night",
+    "yearsOfHosting": "The Camp has been hosting people for over {years} years",
+    "@yearsOfHosting": {
+        "placeholders": {
+            "years": {
+                "type": "int"
+            }
+        }
+    },
+    "hostSpeaksLanguages": "Hosts speaks {languages}",
+    "@hostSpeaksLanguages": {
+        "placeholders": {
+            "languages": {
+                "type": "String"
+            }
+        }
+    },
+    "resultsAvailable": "Around {count} results available",
+    "@resultsAvailable": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
     "campsitesFound": "{count, plural, =0{No campsites} =1{1 campsite} other{{count} campsites}} found",
     "@campsitesFound": {
         "placeholders": {
             "count": {
                 "type": "int"
+            }
+        }
+    },
+    "campsitesOnMap": "{count} campsites would be displayed on the map",
+    "@campsitesOnMap": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "themeMode": "{mode, select, light{Light} dark{Dark} system{System} other{Unknown}}",
+    "@themeMode": {
+        "placeholders": {
+            "mode": {
+                "type": "String",
+                "allowedValues": ["light", "dark", "system"]
             }
         }
     }

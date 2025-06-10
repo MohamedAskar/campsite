@@ -30,6 +30,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get clearFilters => 'Clear Filters';
 
   @override
+  String get clear => 'Clear';
+
+  @override
   String get searchCampsites => 'Search campsites...';
 
   @override
@@ -102,6 +105,92 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retry => 'Retry';
 
   @override
+  String get hostLanguages => 'Host Languages';
+
+  @override
+  String get suitableFor => 'Suitable For';
+
+  @override
+  String get any => 'Any';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get campFireAllowedDescription => 'Camp fire allowed';
+
+  @override
+  String get campFireNotAllowed => 'Not allowed';
+
+  @override
+  String get campFireAllowedInfo =>
+      'You can set a camp fire here, try to be careful with the fire.';
+
+  @override
+  String get campFireNotAllowedInfo => 'No camp fire allowed at this campsite';
+
+  @override
+  String get closeToWaterDescription => 'Close to water';
+
+  @override
+  String get notCloseToWater => 'Not close to water';
+
+  @override
+  String get closeToWaterInfo =>
+      'You can fish, swim or just relax by the water';
+
+  @override
+  String get noWaterAccess => 'No water access at this campsite';
+
+  @override
+  String get unknownLocation => 'Unknown location';
+
+  @override
+  String get locationUnavailable => 'Location unavailable';
+
+  @override
+  String get mapView => 'Map View';
+
+  @override
+  String get googleMapsIntegration =>
+      'Google Maps integration would be implemented here';
+
+  @override
+  String get errorLoadingMapData => 'Error loading map data';
+
+  @override
+  String get information => 'Information';
+
+  @override
+  String get navigate => 'Navigate';
+
+  @override
+  String error(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get perNight => 'per night';
+
+  @override
+  String yearsOfHosting(int years) {
+    return 'The Camp has been hosting people for over $years years';
+  }
+
+  @override
+  String hostSpeaksLanguages(String languages) {
+    return 'Hosts speaks $languages';
+  }
+
+  @override
+  String resultsAvailable(int count) {
+    return 'Around $count results available';
+  }
+
+  @override
   String campsitesFound(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -111,5 +200,21 @@ class AppLocalizationsEn extends AppLocalizations {
       zero: 'No campsites',
     );
     return '$_temp0 found';
+  }
+
+  @override
+  String campsitesOnMap(int count) {
+    return '$count campsites would be displayed on the map';
+  }
+
+  @override
+  String themeMode(String mode) {
+    String _temp0 = intl.Intl.selectLogic(mode, {
+      'light': 'Light',
+      'dark': 'Dark',
+      'system': 'System',
+      'other': 'Unknown',
+    });
+    return '$_temp0';
   }
 }
