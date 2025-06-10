@@ -4,6 +4,7 @@ import 'package:campsite/core/extensions/text_style.dart';
 import 'package:campsite/presentation/pages/home/widgets/filters_app_bar_button.dart';
 import 'package:campsite/presentation/providers/campsite_providers.dart';
 import 'package:campsite/presentation/widgets/common/skeleton_loader.dart';
+import 'package:campsite/presentation/widgets/common/theme_switcher_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -47,10 +48,11 @@ class HomePage extends ConsumerWidget {
           ],
         ),
         actions: [
+          const ThemeSwitcherButton(),
           campsitesAsync.whenOrNull(
                 data: (campsites) => FiltersAppBarButton(),
                 loading: () => Padding(
-                  padding: const EdgeInsetsDirectional.only(end: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: SkeletonLoader.circular(size: 32),
                 ),
               ) ??

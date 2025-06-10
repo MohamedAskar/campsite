@@ -1,4 +1,5 @@
 import 'package:campsite/domain/entities/campsite.dart';
+import 'package:campsite/presentation/controllers/campsite_filter_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -20,11 +21,22 @@ class HomeController extends _$HomeController {
       mapController.dispose();
     });
 
+    // Watch for filter changes and clear selected campsite when filters are applied
+    ref.listen(campsiteFilterControllerProvider, (previous, current) {
+      // Clear selected campsite when filters are applied
+      if (current.hasActiveFilters && state.selectedCampsite != null) {
+        Future(() {
+          state = state.copyWith(selectedCampsite: null);
+        });
+      }
+    });
+
     draggableController.addListener(() {
       final currentSize = state.draggableController.size;
 
-      // Show floating button only when sheet is at max size (0.95)
-      final shouldShowButton = currentSize >= 0.95;
+      // Show floating button when sheet is expanded (above minimum size)
+      // Hide it when sheet is at minimum size since there's no need to collapse further
+      final shouldShowButton = currentSize > 0.8;
       if (state.showFloatingButton != shouldShowButton) {
         state = state.copyWith(showFloatingButton: shouldShowButton);
       }
