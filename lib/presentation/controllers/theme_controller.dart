@@ -36,7 +36,7 @@ class ThemeController extends _$ThemeController {
     };
 
     state = newMode;
-    _saveThemeToPreferences(newMode);
+    await _saveThemeToPreferences(newMode);
   }
 
   void setThemeMode(ThemeMode mode) {
