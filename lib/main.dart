@@ -45,7 +45,7 @@ class ThemeApp extends ConsumerWidget {
     final themeMode = ref.watch(themeControllerProvider);
 
     return MaterialApp.router(
-      title: 'Campsite Platform',
+      title: 'Campsites',
       theme: theme.light(),
       darkTheme: theme.dark(),
       routerConfig: AppRouter.router,
