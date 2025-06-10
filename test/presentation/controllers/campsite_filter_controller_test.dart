@@ -68,5 +68,27 @@ void main() {
       expect(filtered.length, 1);
       expect(filtered.first.id, '3'); // Forest campsite
     });
+
+    test('should trigger state changes when filters are updated', () {
+      var changeCount = 0;
+
+      // Listen to filter changes
+      container.listen(campsiteFilterControllerProvider, (previous, next) {
+        changeCount++;
+      });
+
+      // Apply multiple filter changes
+      controller.updatePriceRange(50.0, 100.0);
+      controller.updateIsCloseToWater(true);
+      controller.toggleHostLanguage('en');
+
+      // Each change should trigger a state update
+      expect(changeCount, greaterThan(0));
+
+      // Verify final state has active filters
+      final finalState = container.read(campsiteFilterControllerProvider);
+      expect(finalState.hasActiveFilters, true);
+      expect(finalState.activeFilterCount, 3);
+    });
   });
 }
