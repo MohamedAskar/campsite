@@ -1,19 +1,19 @@
+import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/domain/entities/geo_location.dart';
 import 'package:campsite/presentation/providers/campsite_providers.dart';
+import 'package:campsite/presentation/widgets/common/skeleton_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
-
-import '../../../../core/extensions/context.dart';
 
 class LocationWidget extends ConsumerWidget {
   final GeoLocation geoLocation;
 
   const LocationWidget({super.key, required this.geoLocation});
 
-  String _formatAddress(Placemark? place) {
+  String _formatAddress(Placemark? place, BuildContext context) {
     if (place == null) {
-      return 'Unknown location';
+      return context.l10n.unknownLocation;
     }
 
     final List<String> addressParts = [];
@@ -34,7 +34,7 @@ class LocationWidget extends ConsumerWidget {
       if (place.name?.isNotEmpty == true) {
         return place.name!;
       }
-      return 'Unknown location';
+      return context.l10n.unknownLocation;
     }
 
     return addressParts.join(', ');
@@ -45,11 +45,13 @@ class LocationWidget extends ConsumerWidget {
     final placemarkAsync = ref.watch(campsiteLocationProvider(geoLocation));
 
     return placemarkAsync.when(
-      data: (placemark) =>
-          Text(_formatAddress(placemark), style: context.textTheme.bodySmall),
-      loading: () => const SizedBox.shrink(),
+      data: (placemark) => Text(
+        _formatAddress(placemark, context),
+        style: context.textTheme.bodySmall,
+      ),
+      loading: () => const SkeletonLoader(width: 150, height: 12),
       error: (error, stack) => Text(
-        'Location unavailable',
+        context.l10n.locationUnavailable,
         style: context.textTheme.bodySmall?.copyWith(
           color: context.colorScheme.error,
         ),
