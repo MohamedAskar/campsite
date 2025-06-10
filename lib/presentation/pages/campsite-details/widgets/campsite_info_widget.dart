@@ -29,13 +29,15 @@ class CampsiteInfoSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Information', style: context.textTheme.titleMedium?.bold),
+        Text(
+          context.l10n.information,
+          style: context.textTheme.titleMedium?.bold,
+        ),
         SizedBox(height: 8),
         InfoWidget(
           leading: Icon(LucideIcons.tentTree, size: iconSize),
           title: TextStyleInjector(
-            text:
-                'The Camp has been hosting people for over $yearsOfHosting years',
+            text: context.l10n.yearsOfHosting(yearsOfHosting),
             replacementTextList: ['$yearsOfHosting'],
             replacementStyle: textStyle?.bold,
           ),
@@ -44,8 +46,11 @@ class CampsiteInfoSection extends StatelessWidget {
         InfoWidget(
           leading: Icon(LucideIcons.languages, size: iconSize),
           title: TextStyleInjector(
-            text:
-                'Hosts speaks ${languages.sublist(0, languages.length - 1).join(', ')} and ${languages.last}',
+            text: context.l10n.hostSpeaksLanguages(
+              languages.length > 1
+                  ? '${languages.sublist(0, languages.length - 1).join(', ')} and ${languages.last}'
+                  : languages.first,
+            ),
             replacementTextList: languages,
             replacementStyle: textStyle?.bold,
           ),

@@ -12,7 +12,10 @@ class CampsiteSuitablilitySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Suitable for', style: context.textTheme.titleMedium?.bold),
+        Text(
+          context.l10n.suitableFor,
+          style: context.textTheme.titleMedium?.bold,
+        ),
         SizedBox(height: 8),
         Text(suitableFor.join(', ')),
       ],

@@ -20,7 +20,10 @@ class CampsiteAmenitiesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Amenities', style: context.textTheme.titleMedium?.bold),
+        Text(
+          context.l10n.amenities,
+          style: context.textTheme.titleMedium?.bold,
+        ),
         SizedBox(height: 8),
         InfoWidget(
           leading: SizedBox.square(
@@ -28,13 +31,15 @@ class CampsiteAmenitiesSection extends StatelessWidget {
             child: Image.asset(CampsiteAssets.campfire),
           ),
           title: Text(
-            campFireAllowed ? 'Camp fire allowed' : 'Not allowed',
+            campFireAllowed
+                ? context.l10n.campFireAllowedDescription
+                : context.l10n.campFireNotAllowed,
             style: context.textTheme.titleMedium,
           ),
           subtitle: Text(
             campFireAllowed
-                ? 'You can set a camp fire here, try to be careful with the fire.'
-                : 'No camp fire allowed at this campsite',
+                ? context.l10n.campFireAllowedInfo
+                : context.l10n.campFireNotAllowedInfo,
             style: context.textTheme.bodySmall,
           ),
         ),
@@ -45,13 +50,15 @@ class CampsiteAmenitiesSection extends StatelessWidget {
             child: Image.asset(CampsiteAssets.water),
           ),
           title: Text(
-            closeToWater ? 'Close to water' : 'Not close to water',
+            closeToWater
+                ? context.l10n.closeToWaterDescription
+                : context.l10n.notCloseToWater,
             style: context.textTheme.titleMedium,
           ),
           subtitle: Text(
             closeToWater
-                ? 'You can fish, swim or just relax by the water'
-                : 'No water access at this campsite',
+                ? context.l10n.closeToWaterInfo
+                : context.l10n.noWaterAccess,
             style: context.textTheme.bodySmall,
           ),
         ),
