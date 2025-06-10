@@ -18,6 +18,8 @@ class GeoLocationModel {
 
   // Ensure coordinates are within valid ranges
   // -90 to 90 for latitude, -180 to 180 for longitude
-  GeoLocation toDomain() =>
-      GeoLocation(lat: lat.clamp(-90.0, 90.0), long: long.clamp(-180.0, 180.0));
+  GeoLocation toDomain() => GeoLocation(
+    lat: (lat / 1000).clamp(-90.0, 90.0),
+    long: (long / 1000).clamp(-180.0, 180.0),
+  );
 }
