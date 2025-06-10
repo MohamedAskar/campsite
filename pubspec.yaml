@@ -31,15 +31,14 @@ dependencies:
   dio: ^5.4.0
 
   # Maps
-  flutter_map: ^8.1.1
+  flutter_map: ^7.0.2
   latlong2: ^0.9.1
-  geolocator: ^10.1.0
+  flutter_map_marker_cluster: ^1.3.6
   geocoding: ^3.0.0
-  permission_handler: ^11.1.0
+  maps_launcher: ^3.0.0+1
 
   # Utilities
   cached_network_image: ^3.3.0
-  lottie: ^2.7.0
   intl: ^0.20.2
   locale_names: ^1.1.1
   url_launcher: ^6.3.1
@@ -58,6 +57,21 @@ dev_dependencies:
 
   # Testing
   mockito: ^5.4.4
+
+  flutter_launcher_icons: ^0.14.3
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  web:
+    generate: true
+    image_path: "assets/images/campsite.png"
+  image_path: "assets/images/campsite.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
+  background_color: "#FFFFFF"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/images/campsite.png"
 
 flutter:
   uses-material-design: true
