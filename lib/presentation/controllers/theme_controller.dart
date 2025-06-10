@@ -14,7 +14,9 @@ class ThemeController extends _$ThemeController {
     final prefs = ref.read(sharedPreferencesProvider);
     final themeIndex = prefs.getInt(_themeKey);
 
-    if (themeIndex != null) {
+    if (themeIndex != null &&
+        themeIndex >= 0 &&
+        themeIndex < ThemeMode.values.length) {
       return ThemeMode.values[themeIndex];
     }
 
