@@ -1,26 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'theme_controller.dart';
+part of 'shared_preferences_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$themeControllerHash() => r'432dad58b637ec85e1e6b467196ec138c5ea2e17';
+String _$sharedPreferencesHash() => r'129ee5e336b3fbd572a363d686c2646e448b859e';
 
-/// See also [ThemeController].
-@ProviderFor(ThemeController)
-final themeControllerProvider =
-    AutoDisposeNotifierProvider<ThemeController, ThemeMode>.internal(
-      ThemeController.new,
-      name: r'themeControllerProvider',
+/// See also [sharedPreferences].
+@ProviderFor(sharedPreferences)
+final sharedPreferencesProvider =
+    AutoDisposeProvider<SharedPreferences>.internal(
+      sharedPreferences,
+      name: r'sharedPreferencesProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$themeControllerHash,
+          : _$sharedPreferencesHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$ThemeController = AutoDisposeNotifier<ThemeMode>;
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef SharedPreferencesRef = AutoDisposeProviderRef<SharedPreferences>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
