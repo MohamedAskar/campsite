@@ -11,20 +11,31 @@ void main() {
   runApp(const ProviderScope(child: CampsiteApp()));
 }
 
-class CampsiteApp extends ConsumerWidget {
+class CampsiteApp extends StatelessWidget {
   const CampsiteApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const ThemeAwareMaterialApp();
+  }
+}
+
+/// Isolates theme watching to prevent unnecessary rebuilds of the entire app
+class ThemeAwareMaterialApp extends ConsumerWidget {
+  const ThemeAwareMaterialApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = AppTheme.createTextTheme(context, "Outfit");
     final theme = AppTheme(textTheme);
+    final themeMode = ref.watch(themeControllerProvider);
 
     return MaterialApp.router(
       title: 'Campsite Platform',
       theme: theme.light(),
       darkTheme: theme.dark(),
       routerConfig: AppRouter.router,
-      themeMode: ref.watch(themeControllerProvider),
+      themeMode: themeMode,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
