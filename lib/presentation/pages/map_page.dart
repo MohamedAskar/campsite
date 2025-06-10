@@ -1,20 +1,20 @@
+import 'package:campsite/core/extensions/context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import '../providers/campsite_providers.dart';
-import '../../l10n/app_localizations.dart';
 
 class MapPage extends ConsumerWidget {
   const MapPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
     final campsitesAsync = ref.watch(campsiteListProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.map),
+        title: Text(context.l10n.map),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
