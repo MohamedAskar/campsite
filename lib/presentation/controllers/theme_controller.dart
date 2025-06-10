@@ -28,17 +28,6 @@ class ThemeController extends _$ThemeController {
     await prefs.setInt(_themeKey, mode.index);
   }
 
-  Future<void> toggleTheme() async {
-    final newMode = switch (state) {
-      ThemeMode.light => ThemeMode.dark,
-      ThemeMode.dark => ThemeMode.light,
-      ThemeMode.system => ThemeMode.light,
-    };
-
-    state = newMode;
-    await _saveThemeToPreferences(newMode);
-  }
-
   Future<void> setThemeMode(ThemeMode mode) async {
     state = mode;
     await _saveThemeToPreferences(mode);

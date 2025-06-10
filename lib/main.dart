@@ -31,13 +31,12 @@ class CampsiteApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ThemeAwareMaterialApp();
+    return const ThemeApp();
   }
 }
 
-/// Isolates theme watching to prevent unnecessary rebuilds of the entire app
-class ThemeAwareMaterialApp extends ConsumerWidget {
-  const ThemeAwareMaterialApp({super.key});
+class ThemeApp extends ConsumerWidget {
+  const ThemeApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -57,9 +56,7 @@ class ThemeAwareMaterialApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en'), // English
-      ],
+      supportedLocales: const [Locale('en')],
       debugShowCheckedModeBanner: false,
     );
   }
