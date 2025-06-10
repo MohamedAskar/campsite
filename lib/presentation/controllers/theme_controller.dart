@@ -30,12 +30,10 @@ class ThemeController extends _$ThemeController {
   }
 
   void toggleTheme() {
-    // More intuitive toggle cycle: light ↔ dark (without system mode)
     final newMode = switch (state) {
       ThemeMode.light => ThemeMode.dark,
       ThemeMode.dark => ThemeMode.light,
-      ThemeMode.system =>
-        ThemeMode.light, // Start with light when coming from system
+      ThemeMode.system => ThemeMode.light,
     };
 
     state = newMode;
