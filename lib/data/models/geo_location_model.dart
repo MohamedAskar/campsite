@@ -16,10 +16,10 @@ class GeoLocationModel {
 
   Map<String, dynamic> toJson() => _$GeoLocationModelToJson(this);
 
-  // Ensure coordinates are within valid ranges
-  // -90 to 90 for latitude, -180 to 180 for longitude
+  // HACK: To ensure that the coordinates are within valid ranges
+  // and not in north or south pole
   GeoLocation toDomain() => GeoLocation(
-    lat: (lat / 1000).clamp(-90.0, 90.0),
-    long: (long / 1000).clamp(-180.0, 180.0),
+    lat: (lat / 1000).clamp(-80.0, 80.0),
+    long: (long / 1000).clamp(-160.0, 160.0),
   );
 }
