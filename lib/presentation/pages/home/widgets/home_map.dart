@@ -3,6 +3,7 @@ import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/core/extensions/text_style.dart';
 import 'package:campsite/domain/entities/campsite.dart';
 import 'package:campsite/presentation/pages/home/controller/home_controller.dart';
+import 'package:campsite/presentation/widgets/common/map_zoom_buttons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -46,8 +47,8 @@ class HomeMap extends ConsumerWidget {
       children: [
         FlutterMap(
           mapController: mapController,
-          options: const MapOptions(
-            initialCenter: LatLng(20.0, 0.0),
+          options: MapOptions(
+            initialCenter: LatLng(20.0, 20.0),
             initialZoom: 2.0,
             minZoom: 1.0,
             maxZoom: 10.0,
@@ -56,10 +57,9 @@ class HomeMap extends ConsumerWidget {
             TileLayer(
               urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
               tileBounds: LatLngBounds(
-                const LatLng(-85.0, -180.0),
-                const LatLng(85.0, 180.0),
+                const LatLng(-90.0, 180.0),
+                const LatLng(90.0, -180.0),
               ),
-              // Use cancellable tile provider for better web performance
               tileProvider: kIsWeb ? CancellableNetworkTileProvider() : null,
             ),
             MarkerClusterLayerWidget(
@@ -100,53 +100,12 @@ class HomeMap extends ConsumerWidget {
           Positioned(
             right: 16,
             bottom: viewPadding.bottom + 16,
-            child: Column(
-              spacing: 8,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _ZoomButton(
-                  icon: Icons.add,
-                  onPressed: () => homeController.zoomIn(),
-                ),
-                _ZoomButton(
-                  icon: Icons.remove,
-                  onPressed: () => homeController.zoomOut(),
-                ),
-              ],
+            child: MapZoomButtons(
+              onZoomIn: homeController.zoomIn,
+              onZoomOut: homeController.zoomOut,
             ),
           ),
       ],
-    );
-  }
-}
-
-class _ZoomButton extends StatelessWidget {
-  const _ZoomButton({required this.icon, required this.onPressed});
-
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      borderRadius: BorderRadius.circular(8),
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: context.colorScheme.surface,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            BoxShadow(
-              color: context.colorScheme.shadow.withValues(alpha: 0.2),
-              blurRadius: 12,
-              spreadRadius: 0,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Icon(icon, color: context.colorScheme.onSurface, size: 20),
-      ),
     );
   }
 }

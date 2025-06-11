@@ -37,8 +37,11 @@ class HomePage extends StatelessWidget {
         ),
         actions: const [
           ThemeSwitcherButton(),
-          SizedBox(width: 8),
-          FiltersAppBarButton(),
+          SizedBox(width: 4),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4),
+            child: FiltersAppBarButton(),
+          ),
         ],
       ),
       body: Builder(
