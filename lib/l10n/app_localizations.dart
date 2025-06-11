@@ -157,8 +157,8 @@ abstract class AppLocalizations {
   /// No description provided for @pricePerNight.
   ///
   /// In en, this message translates to:
-  /// **'Price per night'**
-  String get pricePerNight;
+  /// **'{price} per night'**
+  String pricePerNight(String price);
 
   /// No description provided for @amenities.
   ///

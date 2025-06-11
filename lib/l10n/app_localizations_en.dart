@@ -39,7 +39,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get price => 'Price';
 
   @override
-  String get pricePerNight => 'Price per night';
+  String pricePerNight(String price) {
+    return '$price per night';
+  }
 
   @override
   String get amenities => 'Amenities';

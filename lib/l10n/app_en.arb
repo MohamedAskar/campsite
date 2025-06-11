@@ -9,7 +9,14 @@
     "clear": "Clear",
     "searchCampsites": "Search campsites...",
     "price": "Price",
-    "pricePerNight": "Price per night",
+    "pricePerNight": "{price} per night",
+    "@pricePerNight": {
+        "placeholders": {
+            "price": {
+                "type": "String"
+            }
+        }
+    },
     "amenities": "Amenities",
     "rating": "Rating",
     "minPrice": "Min Price",
