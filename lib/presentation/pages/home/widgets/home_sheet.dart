@@ -1,43 +1,45 @@
 import 'package:campsite/core/extensions/context.dart';
-import 'package:campsite/core/extensions/text_style.dart';
 import 'package:campsite/domain/entities/campsite.dart';
+import 'package:campsite/presentation/pages/home/controller/home_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../widgets/campsite/campsite_card.dart';
+import 'campsite_result_text.dart';
 import 'home_sheet_container.dart';
-import 'home_sheet_drag_handle.dart';
+import 'home_sheet_drag_handle_delegate.dart';
 
-class HomeSheet extends StatefulWidget {
-  const HomeSheet({
-    super.key,
-    required this.campsites,
-    required this.draggableController,
-  });
+class HomeSheet extends ConsumerStatefulWidget {
+  const HomeSheet({super.key, required this.campsites});
 
   final List<Campsite> campsites;
-  final DraggableScrollableController draggableController;
 
   @override
-  State<HomeSheet> createState() => _HomeSheetState();
+  ConsumerState<HomeSheet> createState() => _HomeSheetState();
 }
 
-class _HomeSheetState extends State<HomeSheet> {
+class _HomeSheetState extends ConsumerState<HomeSheet> {
+  late final DraggableScrollableController _draggableController;
   ScrollController? _scrollController;
 
   @override
   void initState() {
     super.initState();
-    widget.draggableController.addListener(_onDraggableChanged);
+    _draggableController = ref.read(
+      homeControllerProvider.select((state) => state.draggableController),
+    );
+    _draggableController.addListener(_onDraggableChanged);
   }
 
   @override
   void dispose() {
-    widget.draggableController.removeListener(_onDraggableChanged);
+    _draggableController.removeListener(_onDraggableChanged);
     super.dispose();
   }
 
   void _onDraggableChanged() {
-    final currentSize = widget.draggableController.size;
+    final currentSize = _draggableController.size;
 
     if (currentSize <= 0.4 && (_scrollController?.position.pixels ?? 0) > 0) {
       _scrollController!.animateTo(
@@ -50,16 +52,18 @@ class _HomeSheetState extends State<HomeSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final campsitesApproxCount = ((widget.campsites.length) ~/ 10) * 10;
+    const minChildSize = 0.15;
+    const defaultInitialChildSize = 0.4;
+    const maxChildSize = 0.925;
 
     return DraggableScrollableSheet(
-      controller: widget.draggableController,
-      initialChildSize: 0.4,
-      minChildSize: 0.15,
-      maxChildSize: 0.925,
+      controller: _draggableController,
+      initialChildSize: kIsWeb ? maxChildSize : defaultInitialChildSize,
+      minChildSize: minChildSize,
+      maxChildSize: maxChildSize,
       snap: true,
       shouldCloseOnMinExtent: false,
-      snapSizes: const [0.15, 0.4, 0.925],
+      snapSizes: const [minChildSize, defaultInitialChildSize, maxChildSize],
       builder: (context, scrollController) {
         _scrollController = scrollController;
 
@@ -69,15 +73,16 @@ class _HomeSheetState extends State<HomeSheet> {
             physics: const ClampingScrollPhysics(),
             slivers: [
               // Handle
-              SliverToBoxAdapter(child: HomeSheetDragHandle()),
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: HomeSheetDragHandleDelegate(
+                  colorScheme: context.colorScheme,
+                ),
+              ),
               SliverPadding(
                 padding: const EdgeInsets.only(bottom: 16),
                 sliver: SliverToBoxAdapter(
-                  child: Text(
-                    'Around $campsitesApproxCount results available',
-                    style: context.textTheme.titleSmall?.bold,
-                    textAlign: TextAlign.center,
-                  ),
+                  child: CampsiteResultText(count: widget.campsites.length),
                 ),
               ),
               SliverSafeArea(

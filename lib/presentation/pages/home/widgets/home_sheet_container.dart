@@ -11,7 +11,7 @@ class HomeSheetContainer extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: context.colorScheme.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
         boxShadow: [
           BoxShadow(
             color: context.colorScheme.shadow.withValues(alpha: 0.5),
