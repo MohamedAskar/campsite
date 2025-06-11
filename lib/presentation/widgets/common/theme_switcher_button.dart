@@ -33,12 +33,9 @@ class ThemeSwitcherButton extends ConsumerWidget {
             )
             .toList();
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: Icon(
-          _getThemeIcon(currentTheme),
-          color: context.colorScheme.onSurface,
-        ),
+      child: Icon(
+        _getThemeIcon(currentTheme),
+        color: context.colorScheme.onSurface,
       ),
     );
   }

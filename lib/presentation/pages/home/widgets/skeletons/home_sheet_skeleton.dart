@@ -1,9 +1,10 @@
+import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/presentation/widgets/common/campsite_card_skeleton.dart';
 import 'package:campsite/presentation/widgets/common/skeleton_loader.dart';
 import 'package:flutter/material.dart';
 
 import '../home_sheet_container.dart';
-import '../home_sheet_drag_handle.dart';
+import '../home_sheet_drag_handle_delegate.dart';
 
 class HomeSheetSkeleton extends StatelessWidget {
   const HomeSheetSkeleton({super.key});
@@ -22,7 +23,12 @@ class HomeSheetSkeleton extends StatelessWidget {
             controller: scrollController,
             physics: const ClampingScrollPhysics(),
             slivers: [
-              SliverToBoxAdapter(child: HomeSheetDragHandle()),
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: HomeSheetDragHandleDelegate(
+                  colorScheme: context.colorScheme,
+                ),
+              ),
               SliverPadding(
                 padding: const EdgeInsets.only(bottom: 16),
                 sliver: SliverToBoxAdapter(
