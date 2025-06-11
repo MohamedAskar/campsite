@@ -2,38 +2,26 @@ import 'package:campsite/core/constants/campsite_assets.dart';
 import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/core/extensions/text_style.dart';
 import 'package:campsite/presentation/pages/home/widgets/filters_app_bar_button.dart';
-import 'package:campsite/presentation/providers/campsite_providers.dart';
-import 'package:campsite/presentation/widgets/common/skeleton_loader.dart';
+import 'package:campsite/presentation/pages/home/widgets/layouts/home_desktop_layout.dart';
+import 'package:campsite/presentation/pages/home/widgets/layouts/home_mobile_layout.dart';
 import 'package:campsite/presentation/widgets/common/theme_switcher_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'controller/home_controller.dart';
 import 'widgets/home_floating_button.dart';
-import 'widgets/home_map.dart';
-import 'widgets/home_sheet.dart';
-import 'widgets/selected_campsite_card.dart';
-import 'widgets/skeletons/home_page_skeleton.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final campsitesAsync = ref.watch(filteredCampsiteListProvider);
-    final homeState = ref.watch(homeControllerProvider);
-    final homeController = ref.read(homeControllerProvider.notifier);
-
-    final mapController = homeState.mapController;
-    final draggableController = homeState.draggableController;
-    final showFloatingButton = homeState.showFloatingButton;
-    final selectedCampsite = homeState.selectedCampsite;
+  Widget build(BuildContext context) {
+    final viewPadding = MediaQuery.viewPaddingOf(context);
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: context.isMobile,
       appBar: AppBar(
         centerTitle: false,
         toolbarHeight: 72,
+        notificationPredicate: (_) => false,
         title: Row(
           spacing: 4,
           children: [
@@ -47,50 +35,24 @@ class HomePage extends ConsumerWidget {
             ),
           ],
         ),
-        actions: [
-          const ThemeSwitcherButton(),
-          campsitesAsync.whenOrNull(
-                data: (campsites) => FiltersAppBarButton(),
-                loading: () => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SkeletonLoader.circular(size: 32),
-                ),
-              ) ??
-              const SizedBox.shrink(),
+        actions: const [
+          ThemeSwitcherButton(),
+          SizedBox(width: 8),
+          FiltersAppBarButton(),
         ],
       ),
-      body: campsitesAsync.when(
-        data: (campsites) {
-          return Stack(
-            children: [
-              HomeMap(
-                campsites: campsites,
-                mapController: mapController,
-                onClusterTap: homeController.fitClusterToBounds,
-                onMarkerTap: homeController.selectCampsite,
-              ),
-              if (selectedCampsite != null)
-                SelectedCampsiteCard(
-                  campsite: selectedCampsite,
-                  onClose: homeController.clearSelectedCampsite,
-                )
-              else
-                HomeSheet(
-                  campsites: campsites,
-                  draggableController: draggableController,
-                ),
-            ],
-          );
+      body: Builder(
+        builder: (context) {
+          if (context.isDesktop) {
+            return HomeDesktopLayout();
+          } else {
+            return HomeMobileLayout(viewPadding: viewPadding);
+          }
         },
-        loading: () => const HomePageSkeleton(),
-        error: (error, stackTrace) =>
-            Center(child: Text('Error: ${error.toString()}')),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: showFloatingButton
-          ? HomeFloatingButton(
-              onPressed: homeController.onFloatingButtonPressed,
-            )
+      floatingActionButton: context.isMobile
+          ? const HomeFloatingButton()
           : null,
     );
   }
