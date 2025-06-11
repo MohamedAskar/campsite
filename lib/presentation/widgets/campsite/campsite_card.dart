@@ -12,9 +12,14 @@ import '../../../domain/entities/campsite.dart';
 import 'amenity_icon.dart';
 
 class CampsiteCard extends StatelessWidget {
-  final Campsite campsite;
+  const CampsiteCard({
+    super.key,
+    required this.campsite,
+    this.showAmenities = true,
+  });
 
-  const CampsiteCard({super.key, required this.campsite});
+  final Campsite campsite;
+  final bool showAmenities;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,9 @@ class CampsiteCard extends StatelessWidget {
       onTap: () {
         context.pushNamed('campsite', pathParameters: {'id': campsite.id});
       },
+      borderRadius: BorderRadius.circular(12),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
@@ -42,27 +49,29 @@ class CampsiteCard extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           TextStyleInjector(
-            text: '$price per night',
+            text: context.l10n.pricePerNight(price),
             replacementTextList: [price],
             replacementStyle: context.textTheme.titleSmall?.bold,
           ),
-          const SizedBox(height: 4),
-          Wrap(
-            spacing: 4,
-            runSpacing: 4,
-            children: [
-              if (campsite.isCloseToWater)
-                AmenityIcon(
-                  icon: CampsiteAssets.water,
-                  available: campsite.isCloseToWater,
-                ),
-              if (campsite.isCampFireAllowed)
-                AmenityIcon(
-                  icon: CampsiteAssets.campfire,
-                  available: campsite.isCampFireAllowed,
-                ),
-            ],
-          ),
+          if (showAmenities) ...[
+            const SizedBox(height: 4),
+            Wrap(
+              spacing: 4,
+              runSpacing: 4,
+              children: [
+                if (campsite.isCloseToWater)
+                  AmenityIcon(
+                    icon: CampsiteAssets.water,
+                    available: campsite.isCloseToWater,
+                  ),
+                if (campsite.isCampFireAllowed)
+                  AmenityIcon(
+                    icon: CampsiteAssets.campfire,
+                    available: campsite.isCampFireAllowed,
+                  ),
+              ],
+            ),
+          ],
         ],
       ),
     );
