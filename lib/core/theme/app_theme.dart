@@ -126,20 +126,12 @@ class AppTheme {
     ),
     scaffoldBackgroundColor: colorScheme.surface,
     canvasColor: colorScheme.surface,
-    iconTheme: IconThemeData(
-      color: colorScheme.onSurface,
-    ),
+    iconTheme: IconThemeData(color: colorScheme.onSurface),
   );
 
-  static TextTheme createTextTheme(
-    BuildContext context,
-    String fontFamily,
-  ) {
+  static TextTheme createTextTheme(BuildContext context, String fontFamily) {
     TextTheme baseTextTheme = Theme.of(context).textTheme;
-    TextTheme textTheme = GoogleFonts.getTextTheme(
-      fontFamily,
-      baseTextTheme,
-    );
+    TextTheme textTheme = GoogleFonts.getTextTheme(fontFamily, baseTextTheme);
     return textTheme;
   }
 }
