@@ -60,7 +60,7 @@
             }
         }
     },
-    "resultsAvailable": "Around {count} results available",
+    "resultsAvailable": "{count} results available",
     "@resultsAvailable": {
         "placeholders": {
             "count": {

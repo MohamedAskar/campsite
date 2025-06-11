@@ -295,7 +295,7 @@ abstract class AppLocalizations {
   /// No description provided for @resultsAvailable.
   ///
   /// In en, this message translates to:
-  /// **'Around {count} results available'**
+  /// **'{count} results available'**
   String resultsAvailable(int count);
 
   /// No description provided for @themeMode.

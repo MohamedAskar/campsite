@@ -119,7 +119,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String resultsAvailable(int count) {
-    return 'Around $count results available';
+    return '$count results available';
   }
 
   @override

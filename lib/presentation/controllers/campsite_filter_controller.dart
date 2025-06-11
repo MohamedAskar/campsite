@@ -64,6 +64,10 @@ class CampsiteFilterController extends _$CampsiteFilterController {
     state = const CampsiteFilter();
   }
 
+  void updateFilter(CampsiteFilter filter) {
+    state = filter;
+  }
+
   List<Campsite> applyFilters(List<Campsite> campsites) {
     if (!state.hasActiveFilters) {
       return campsites;

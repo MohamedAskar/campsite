@@ -9,10 +9,8 @@ class CampsiteResultText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final campsitesApproxCount = ((count) ~/ 10) * 10;
-
     return Text(
-      context.l10n.resultsAvailable(campsitesApproxCount),
+      context.l10n.resultsAvailable(count),
       style: context.textTheme.titleSmall?.bold,
       textAlign: TextAlign.center,
     );
