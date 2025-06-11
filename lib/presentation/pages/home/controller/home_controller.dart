@@ -54,7 +54,7 @@ class HomeController extends _$HomeController {
         state.mapController.move(state.mapController.camera.center, 4);
       } else if (currentSize >= 0.4) {
         // Sheet is expanded, zoom out
-        state.mapController.move(state.mapController.camera.center, 2);
+        state.mapController.move(state.mapController.camera.center, 3);
       }
     });
 

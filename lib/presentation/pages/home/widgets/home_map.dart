@@ -49,9 +49,8 @@ class HomeMap extends ConsumerWidget {
           mapController: mapController,
           options: MapOptions(
             initialCenter: LatLng(20.0, 20.0),
-            initialZoom: 2.0,
-            minZoom: 1.0,
-            maxZoom: 10.0,
+            initialZoom: 3.0,
+            maxZoom: 12.0,
           ),
           children: [
             TileLayer(
