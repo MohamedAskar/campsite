@@ -39,11 +39,14 @@ class HomeMobileLayout extends ConsumerWidget {
               child: Builder(
                 builder: (context) {
                   if (selectedCampsite != null) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: SelectedCampsiteCard(
-                        campsite: selectedCampsite,
-                        onClose: homeController.clearSelectedCampsite,
+                    return Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: SelectedCampsiteCard(
+                          campsite: selectedCampsite,
+                          onClose: homeController.clearSelectedCampsite,
+                        ),
                       ),
                     );
                   } else {

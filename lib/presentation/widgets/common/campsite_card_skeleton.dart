@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'skeleton_loader.dart';
 
 class CampsiteCardSkeleton extends StatelessWidget {
-  const CampsiteCardSkeleton({super.key});
+  const CampsiteCardSkeleton({super.key, this.showAmenities = true});
+
+  final bool showAmenities;
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +30,16 @@ class CampsiteCardSkeleton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
 
-        SizedBox(height: 8),
-
-        // Amenities row
-        Wrap(
-          spacing: 12,
-          children: [
-            SkeletonLoader.circular(size: 24),
-            SkeletonLoader.circular(size: 24),
-          ],
-        ),
+        if (showAmenities) ...[
+          SizedBox(height: 8),
+          Wrap(
+            spacing: 12,
+            children: [
+              SkeletonLoader.circular(size: 24),
+              SkeletonLoader.circular(size: 24),
+            ],
+          ),
+        ],
       ],
     );
   }

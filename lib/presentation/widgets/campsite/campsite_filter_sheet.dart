@@ -7,6 +7,7 @@ import 'package:campsite/presentation/widgets/campsite/components/filter_ameniti
 import 'package:campsite/presentation/widgets/campsite/components/filter_languages_section.dart';
 import 'package:campsite/presentation/widgets/campsite/components/filter_price_range_section.dart';
 import 'package:campsite/presentation/widgets/campsite/components/filter_suitable_for_section.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -219,6 +220,7 @@ class CampsiteFilterSheet extends ConsumerWidget {
                   ],
                 ),
               ),
+              if (kIsWeb) const SizedBox(height: 48),
             ],
           ),
         );

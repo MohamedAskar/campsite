@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../campsite_result_text.dart';
 import '../home_map.dart';
 import '../selected_campsite_card.dart';
+import '../skeletons/home_desktop_skeleton.dart';
 
 class HomeDesktopLayout extends ConsumerWidget {
   const HomeDesktopLayout({super.key});
@@ -94,7 +95,7 @@ class HomeDesktopLayout extends ConsumerWidget {
           ],
         );
       },
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => const HomeDesktopSkeleton(),
       error: (error, stackTrace) =>
           Center(child: Text(context.l10n.error(error.toString()))),
     );

@@ -42,11 +42,7 @@ class _HomeSheetState extends ConsumerState<HomeSheet> {
     final currentSize = _draggableController.size;
 
     if (currentSize <= 0.4 && (_scrollController?.position.pixels ?? 0) > 0) {
-      _scrollController!.animateTo(
-        0.0,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
+      _scrollController!.jumpTo(0.0);
     }
   }
 
