@@ -1,12 +1,11 @@
 import 'package:campsite/core/extensions/context.dart';
-import 'package:campsite/core/extensions/strings.dart';
 import 'package:campsite/core/extensions/text_style.dart';
 import 'package:campsite/domain/entities/campsite.dart';
-import 'package:campsite/presentation/widgets/text_style_injector.dart';
+import 'package:campsite/presentation/widgets/common/text_style_injector.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:maps_launcher/maps_launcher.dart';
+
+import 'campsite_navigate_button.dart';
 
 class CampsiteFooter extends StatelessWidget {
   const CampsiteFooter({super.key, required this.campsite});
@@ -45,29 +44,10 @@ class CampsiteFooter extends StatelessWidget {
               replacementTextList: [pricePerNight],
               replacementStyle: context.textTheme.titleLarge?.bold,
             ),
-            FilledButton(
-              onPressed: () => _launchMaps(context),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(LucideIcons.navigation, size: 18),
-                  SizedBox(width: 8),
-                  Text(context.l10n.navigate),
-                ],
-              ),
-            ),
+            CampsiteNavigateButton(campsite: campsite),
           ],
         ),
       ),
-    );
-  }
-
-  Future<void> _launchMaps(BuildContext context) async {
-    if (!context.mounted) return;
-    MapsLauncher.launchCoordinates(
-      campsite.geoLocation.lat,
-      campsite.geoLocation.long,
-      campsite.label.capitalize(),
     );
   }
 }
