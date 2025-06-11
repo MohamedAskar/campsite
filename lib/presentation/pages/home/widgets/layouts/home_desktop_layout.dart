@@ -1,3 +1,4 @@
+import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/presentation/pages/home/controller/home_controller.dart';
 import 'package:campsite/presentation/providers/campsite_providers.dart';
 import 'package:campsite/presentation/widgets/campsite/campsite_card.dart';
@@ -95,7 +96,7 @@ class HomeDesktopLayout extends ConsumerWidget {
       },
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stackTrace) =>
-          Center(child: Text('Error: ${error.toString()}')),
+          Center(child: Text(context.l10n.error(error.toString()))),
     );
   }
 }

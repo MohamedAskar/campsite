@@ -105,7 +105,7 @@ class CampsiteFilterSheet extends ConsumerWidget {
                           .read(campsiteFilterControllerProvider.notifier)
                           .clearFilters();
                     },
-                    child: Text('Clear'),
+                    child: Text(context.l10n.clear),
                   ),
                 Expanded(
                   child: FilledButton(
@@ -170,7 +170,7 @@ class _PriceRangeSectionState extends State<_PriceRangeSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Price per night', style: context.textTheme.titleMedium?.bold),
+        Text(context.l10n.price, style: context.textTheme.titleMedium?.bold),
         const SizedBox(height: 8),
         Row(
           children: [
@@ -220,17 +220,20 @@ class _AmenitiesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Amenities', style: context.textTheme.titleMedium?.bold),
+        Text(
+          context.l10n.amenities,
+          style: context.textTheme.titleMedium?.bold,
+        ),
         const SizedBox(height: 12),
         _FilterChip(
-          label: 'Close to water',
+          label: context.l10n.closeToWater,
           icon: CampsiteAssets.water,
           value: isCloseToWater,
           onChanged: onWaterChanged,
         ),
         const SizedBox(height: 8),
         _FilterChip(
-          label: 'Campfire allowed',
+          label: context.l10n.campFireAllowed,
           icon: CampsiteAssets.campfire,
           value: isCampFireAllowed,
           onChanged: onCampFireChanged,
@@ -258,7 +261,10 @@ class _LanguagesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Host Languages', style: context.textTheme.titleMedium?.bold),
+        Text(
+          context.l10n.hostLanguages,
+          style: context.textTheme.titleMedium?.bold,
+        ),
         const SizedBox(height: 12),
         Wrap(
           spacing: 8,
@@ -296,7 +302,10 @@ class _SuitableForSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Suitable For', style: context.textTheme.titleMedium?.bold),
+        Text(
+          context.l10n.suitableFor,
+          style: context.textTheme.titleMedium?.bold,
+        ),
         const SizedBox(height: 12),
         Wrap(
           spacing: 8,
@@ -358,9 +367,9 @@ class _FilterChip extends StatelessWidget {
             showSelectedIcon: false,
 
             segments: [
-              ButtonSegment<bool?>(value: null, label: Text('Any')),
-              ButtonSegment<bool?>(value: true, label: Text('Yes')),
-              ButtonSegment<bool?>(value: false, label: Text('No')),
+              ButtonSegment<bool?>(value: null, label: Text(context.l10n.any)),
+              ButtonSegment<bool?>(value: true, label: Text(context.l10n.yes)),
+              ButtonSegment<bool?>(value: false, label: Text(context.l10n.no)),
             ],
             selected: {value},
             onSelectionChanged: (Set<bool?> newSelection) {

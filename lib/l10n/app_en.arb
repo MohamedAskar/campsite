@@ -1,13 +1,9 @@
 {
-    "appTitle": "Campsite Platform",
-    "home": "Home",
+    "appTitle": "Campsites",
     "map": "Map",
     "campsites": "Campsites",
-    "filters": "Filters",
     "applyFilters": "Apply Filters",
-    "clearFilters": "Clear Filters",
     "clear": "Clear",
-    "searchCampsites": "Search campsites...",
     "price": "Price",
     "pricePerNight": "{price} per night",
     "@pricePerNight": {
@@ -18,26 +14,10 @@
         }
     },
     "amenities": "Amenities",
-    "rating": "Rating",
-    "minPrice": "Min Price",
-    "maxPrice": "Max Price",
-    "minRating": "Min Rating",
-    "toilets": "Toilets",
-    "shower": "Shower",
-    "drinkingWater": "Drinking Water",
-    "picnicTable": "Picnic Table",
-    "firePlace": "Fire Place",
     "closeToWater": "Close to Water",
     "campFireAllowed": "Campfire Allowed",
-    "details": "Details",
-    "description": "Description",
     "location": "Location",
-    "bookNow": "Book Now",
-    "viewOnMap": "View on Map",
-    "noResultsFound": "No campsites found",
-    "tryAdjustingFilters": "Try adjusting your filters",
     "errorLoadingCampsites": "Error loading campsites",
-    "retry": "Retry",
     "hostLanguages": "Host Languages",
     "suitableFor": "Suitable For",
     "any": "Any",
@@ -53,9 +33,6 @@
     "noWaterAccess": "No water access at this campsite",
     "unknownLocation": "Unknown location",
     "locationUnavailable": "Location unavailable",
-    "mapView": "Map View",
-    "googleMapsIntegration": "Google Maps integration would be implemented here",
-    "errorLoadingMapData": "Error loading map data",
     "information": "Information",
     "navigate": "Navigate",
     "error": "Error: {error}",
@@ -91,28 +68,16 @@
             }
         }
     },
-    "campsitesFound": "{count, plural, =0{No campsites} =1{1 campsite} other{{count} campsites}} found",
-    "@campsitesFound": {
-        "placeholders": {
-            "count": {
-                "type": "int"
-            }
-        }
-    },
-    "campsitesOnMap": "{count} campsites would be displayed on the map",
-    "@campsitesOnMap": {
-        "placeholders": {
-            "count": {
-                "type": "int"
-            }
-        }
-    },
     "themeMode": "{mode, select, light{Light} dark{Dark} system{System} other{Unknown}}",
     "@themeMode": {
         "placeholders": {
             "mode": {
                 "type": "String",
-                "allowedValues": ["light", "dark", "system"]
+                "allowedValues": [
+                    "light",
+                    "dark",
+                    "system"
+                ]
             }
         }
     }

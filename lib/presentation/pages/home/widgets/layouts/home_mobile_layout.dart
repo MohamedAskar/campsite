@@ -57,7 +57,7 @@ class HomeMobileLayout extends ConsumerWidget {
       },
       loading: () => const HomePageSkeleton(),
       error: (error, stackTrace) =>
-          Center(child: Text('Error: ${error.toString()}')),
+          Center(child: Text(context.l10n.error(error.toString()))),
     );
   }
 }
