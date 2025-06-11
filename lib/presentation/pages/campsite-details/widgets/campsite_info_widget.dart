@@ -1,6 +1,6 @@
 import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/core/extensions/text_style.dart';
-import 'package:campsite/presentation/widgets/text_style_injector.dart';
+import 'package:campsite/presentation/widgets/common/text_style_injector.dart';
 import 'package:flutter/material.dart';
 import 'package:locale_names/locale_names.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
