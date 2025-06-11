@@ -21,6 +21,13 @@ class HomeController extends _$HomeController {
       mapController.dispose();
     });
 
+    // Listen for user gesture events to clear selected campsite
+    mapController.mapEventStream.listen((event) {
+      if (state.selectedCampsite != null && (event is MapEventMoveStart)) {
+        clearSelectedCampsite();
+      }
+    });
+
     // Watch for filter changes and clear selected campsite when filters are applied
     ref.listen(campsiteFilterControllerProvider, (previous, current) {
       // Clear selected campsite when filters are applied
@@ -71,14 +78,16 @@ class HomeController extends _$HomeController {
 
   void clearSelectedCampsite() {
     state = state.copyWith(selectedCampsite: null);
-    // Wait for widget rebuild, then animate the sheet back to 0.15
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      state.draggableController.animateTo(
-        0.4,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    });
+    if (state.draggableController.isAttached) {
+      // Wait for widget rebuild, then animate the sheet back to 0.15
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        state.draggableController.animateTo(
+          0.4,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      });
+    }
   }
 
   void onFloatingButtonPressed() {
@@ -96,6 +105,20 @@ class HomeController extends _$HomeController {
         padding: const EdgeInsets.all(80),
         maxZoom: 6.0,
       ),
+    );
+  }
+
+  void zoomIn() {
+    state.mapController.move(
+      state.mapController.camera.center,
+      state.mapController.camera.zoom + 1,
+    );
+  }
+
+  void zoomOut() {
+    state.mapController.move(
+      state.mapController.camera.center,
+      state.mapController.camera.zoom - 1,
     );
   }
 }
