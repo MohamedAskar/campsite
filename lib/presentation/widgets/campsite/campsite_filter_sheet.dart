@@ -213,7 +213,7 @@ class CampsiteFilterSheet extends ConsumerWidget {
                     Expanded(
                       child: FilledButton(
                         onPressed: applyFilters,
-                        child: Text('Show $filteredCount results'),
+                        child: Text(context.l10n.showCampsites(filteredCount)),
                       ),
                     ),
                   ],

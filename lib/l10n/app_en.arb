@@ -3,6 +3,14 @@
     "map": "Map",
     "campsites": "Campsites",
     "applyFilters": "Apply Filters",
+    "showCampsites": "Show {count} campsites",
+    "@showCampsites": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
     "clear": "Clear",
     "price": "Price",
     "pricePerNight": "{price} per night",

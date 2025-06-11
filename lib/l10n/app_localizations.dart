@@ -118,6 +118,12 @@ abstract class AppLocalizations {
   /// **'Apply Filters'**
   String get applyFilters;
 
+  /// No description provided for @showCampsites.
+  ///
+  /// In en, this message translates to:
+  /// **'Show {count} campsites'**
+  String showCampsites(int count);
+
   /// No description provided for @clear.
   ///
   /// In en, this message translates to:

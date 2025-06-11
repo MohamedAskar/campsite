@@ -1,6 +1,6 @@
+import 'package:campsite/data/models/campsite_model.dart';
 import 'package:campsite/data/models/geo_location_model.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:campsite/data/models/campsite_model.dart';
 
 void main() {
   group('CampsiteModel', () {
@@ -85,8 +85,9 @@ void main() {
       expect(domain.createdAt, DateTime.parse('2022-09-11T14:25:09.496Z'));
       expect(domain.label, 'Domain Test Campsite');
       expect(domain.photo, 'https://example.com/test.jpg');
-      expect(domain.geoLocation.lat, 45.0);
-      expect(domain.geoLocation.long, -90.0);
+      // GeoLocation coordinates are divided by 1000 and clamped in toDomain()
+      expect(domain.geoLocation.lat, 0.045); // 45.0 / 1000
+      expect(domain.geoLocation.long, -0.09); // -90.0 / 1000
       expect(domain.isCloseToWater, true);
       expect(domain.isCampFireAllowed, false);
       expect(domain.hostLanguages, ['en', 'fr']);
@@ -117,8 +118,9 @@ void main() {
       final domain = geoLocationModel.toDomain();
 
       // Assert
-      expect(domain.lat, 50.0);
-      expect(domain.long, 10.0);
+      // Coordinates are divided by 1000 and clamped in toDomain()
+      expect(domain.lat, 0.05); // 50.0 / 1000
+      expect(domain.long, 0.01); // 10.0 / 1000
     });
   });
 }

@@ -21,6 +21,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get applyFilters => 'Apply Filters';
 
   @override
+  String showCampsites(int count) {
+    return 'Show $count campsites';
+  }
+
+  @override
   String get clear => 'Clear';
 
   @override
