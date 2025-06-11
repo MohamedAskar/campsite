@@ -9,7 +9,7 @@ class AppRouter {
 
   static final GoRouter router = GoRouter(
     initialLocation: home,
-    debugLogDiagnostics: true,
+    debugLogDiagnostics: false,
     routes: [
       GoRoute(path: home, builder: (context, state) => const HomePage()),
       GoRoute(

@@ -16,8 +16,9 @@ class GeoLocationModel {
 
   Map<String, dynamic> toJson() => _$GeoLocationModelToJson(this);
 
-  // HACK: To ensure that the coordinates are within valid ranges
-  // and not in north or south pole
+  // Convert API coordinates to standard lat/long format
+  // API provides coordinates in thousands (e.g., 45123 = 45.123°)
+  // and clamped to avoid extreme polar coordinates for better map display
   GeoLocation toDomain() => GeoLocation(
     lat: (lat / 1000).clamp(-80.0, 80.0),
     long: (long / 1000).clamp(-160.0, 160.0),

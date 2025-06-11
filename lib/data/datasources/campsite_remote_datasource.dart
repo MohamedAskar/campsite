@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../../core/network/dio_client.dart';
 import '../models/campsite_model.dart';
 
@@ -20,10 +22,19 @@ class CampsiteRemoteDataSourceImpl implements CampsiteRemoteDataSource {
         final List<dynamic> data = response.data;
         return data.map((json) => CampsiteModel.fromJson(json)).toList();
       } else {
-        throw Exception('Failed to load campsites: ${response.statusCode}');
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+          message: 'Failed to load campsites: ${response.statusCode}',
+        );
       }
+    } on DioException {
+      rethrow;
     } catch (e) {
-      throw Exception('Failed to load campsites: $e');
+      throw DioException(
+        requestOptions: RequestOptions(path: 'campsites'),
+        message: 'Failed to load campsites: $e',
+      );
     }
   }
 
@@ -34,10 +45,19 @@ class CampsiteRemoteDataSourceImpl implements CampsiteRemoteDataSource {
       if (response.statusCode == 200) {
         return CampsiteModel.fromJson(response.data);
       } else {
-        throw Exception('Failed to load campsite: ${response.statusCode}');
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+          message: 'Failed to load campsite: ${response.statusCode}',
+        );
       }
+    } on DioException {
+      rethrow;
     } catch (e) {
-      throw Exception('Failed to load campsite: $e');
+      throw DioException(
+        requestOptions: RequestOptions(path: 'campsites/$id'),
+        message: 'Failed to load campsite: $e',
+      );
     }
   }
 }
