@@ -1,4 +1,6 @@
 import 'package:campsite/core/extensions/context.dart';
+import 'package:campsite/presentation/widgets/common/bounded_scrollable_layout.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../widgets/common/skeleton_loader.dart';
@@ -8,41 +10,37 @@ class CampsiteDetailSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
-      children: [
-        SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Column(
-            spacing: 24,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header Section Skeleton
-              Padding(
-                padding: EdgeInsets.only(bottom: 8),
-                child: _HeaderSectionSkeleton(),
-              ),
-
-              // Info Section Skeleton
-              _InfoSectionSkeleton(),
-
-              // Amenities Section Skeleton
-              _AmenitiesSectionSkeleton(),
-
-              // Location Section Skeleton
-              _LocationSectionSkeleton(),
-
-              // Suitability Section Skeleton
-              _SuitabilitySectionSkeleton(),
-
-              // Add bottom padding for footer
-              SizedBox(height: 100),
-            ],
+    return BoundedScrollableLayout(
+      padding: context.isMobile
+          ? EdgeInsets.symmetric(horizontal: 16, vertical: 12)
+          : EdgeInsets.symmetric(vertical: 24),
+      child: Column(
+        spacing: 24,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (!context.isMobile) SkeletonLoader(height: 400),
+          // Header Section Skeleton
+          Padding(
+            padding: EdgeInsets.only(bottom: 8),
+            child: _HeaderSectionSkeleton(),
           ),
-        ),
 
-        // Footer Skeleton
-        Align(alignment: Alignment.bottomCenter, child: _FooterSkeleton()),
-      ],
+          // Info Section Skeleton
+          _InfoSectionSkeleton(),
+
+          // Amenities Section Skeleton
+          _AmenitiesSectionSkeleton(),
+
+          // Location Section Skeleton
+          _LocationSectionSkeleton(),
+
+          // Suitability Section Skeleton
+          _SuitabilitySectionSkeleton(),
+
+          // Add bottom padding for footer
+          SizedBox(height: 100),
+        ],
+      ),
     );
   }
 }
@@ -52,15 +50,49 @@ class _HeaderSectionSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        spacing: 12,
+    if (context.isMobile) {
+      return Center(
+        child: Column(
+          spacing: 12,
+          children: [_TitleSkeleton(), if (!kIsWeb) _LocationSkeleton()],
+        ),
+      );
+    } else {
+      return const Row(
         children: [
-          SkeletonLoader(width: 200, height: 28),
-          SkeletonLoader(width: 150, height: 12),
+          Expanded(
+            child: Column(
+              spacing: 12,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [_TitleSkeleton(), if (!kIsWeb) _LocationSkeleton()],
+            ),
+          ),
+          SkeletonLoader(
+            width: 140,
+            height: 20,
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ),
         ],
-      ),
-    );
+      );
+    }
+  }
+}
+
+class _TitleSkeleton extends StatelessWidget {
+  const _TitleSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return SkeletonLoader(width: 200, height: 28);
+  }
+}
+
+class _LocationSkeleton extends StatelessWidget {
+  const _LocationSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return SkeletonLoader(width: 150, height: 12);
   }
 }
 
@@ -147,58 +179,6 @@ class _LocationSectionSkeleton extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _FooterSkeleton extends StatelessWidget {
-  const _FooterSkeleton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: context.colorScheme.surface,
-        boxShadow: [
-          BoxShadow(
-            color: context.colorScheme.shadow.withValues(alpha: 0.2),
-            blurRadius: 8,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        top: false,
-        child: const Row(
-          children: [
-            Expanded(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                spacing: 4,
-                children: [
-                  SkeletonLoader(
-                    width: 80,
-                    height: 20,
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                  ),
-                  SkeletonLoader(
-                    width: 60,
-                    height: 14,
-                    borderRadius: BorderRadius.all(Radius.circular(7)),
-                  ),
-                ],
-              ),
-            ),
-            SkeletonLoader(
-              width: 140,
-              height: 42,
-              borderRadius: BorderRadius.all(Radius.circular(24)),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/presentation/widgets/common/skeleton_loader.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+
+import '../header_back_button.dart';
 
 class CampsiteHeaderSkeleton extends StatelessWidget {
   const CampsiteHeaderSkeleton({super.key});
@@ -12,13 +12,7 @@ class CampsiteHeaderSkeleton extends StatelessWidget {
     return SliverAppBar(
       pinned: true,
       expandedHeight: 240,
-      leading: IconButton(
-        onPressed: () => context.pop(),
-        icon: CircleAvatar(
-          backgroundColor: context.colorScheme.surface,
-          child: const Icon(LucideIcons.arrowLeft),
-        ),
-      ),
+      leading: const HeaderBackButton(),
       flexibleSpace: FlexibleSpaceBar(
         background: ClipRRect(
           borderRadius: const BorderRadius.vertical(
