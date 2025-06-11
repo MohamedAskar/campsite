@@ -2,8 +2,11 @@ import 'package:campsite/core/constants/campsite_assets.dart';
 import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/core/extensions/text_style.dart';
 import 'package:campsite/domain/entities/geo_location.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+// Import cancellable tile provider for web
+import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
 import 'package:latlong2/latlong.dart';
 
 class CampsiteLocationSection extends StatefulWidget {
@@ -54,6 +57,10 @@ class _CampsiteLocationSectionState extends State<CampsiteLocationSection> {
                     urlTemplate:
                         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'com.example.campsite',
+                    // Use cancellable tile provider for better web performance
+                    tileProvider: kIsWeb
+                        ? CancellableNetworkTileProvider()
+                        : null,
                   ),
                   MarkerLayer(
                     markers: [
