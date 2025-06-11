@@ -3,7 +3,7 @@ import 'package:campsite/core/extensions/context.dart';
 import 'package:campsite/core/extensions/strings.dart';
 import 'package:campsite/core/extensions/text_style.dart';
 import 'package:campsite/presentation/widgets/campsite/campsite_image.dart';
-import 'package:campsite/presentation/widgets/text_style_injector.dart';
+import 'package:campsite/presentation/widgets/common/text_style_injector.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
